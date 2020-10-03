@@ -5,9 +5,14 @@ import {LocalStorage} from "@/engine/saving/LocalStorage";
 import {Settings} from "@/engine/features/settings/Settings";
 import {Statistics} from "@/engine/features/statistics/Statistics";
 import {Achievements} from "@/engine/features/achievements/Achievements";
+import {TimeLine} from "@/game/features/timeline/TimeLine";
+import {Scrap} from "@/game/features/scrap/Scrap";
 
 export class Game {
     private _tickInterval: any;
+
+    public timeLine: TimeLine;
+    public scrap: Scrap;
 
     public wallet: Wallet;
     public settings: Settings;
@@ -20,8 +25,12 @@ export class Game {
 
     private readonly TICK_DURATION_MS = 100.0;
 
-    constructor(wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
+    constructor(timeLine: TimeLine, scrap: Scrap, wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
         this.allFeatures = [];
+
+        this.timeLine = this.registerFeature(timeLine);
+
+        this.scrap = this.registerFeature(scrap);
 
         this.wallet = this.registerFeature(wallet)
         this.settings = this.registerFeature(settings);

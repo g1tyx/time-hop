@@ -3,6 +3,8 @@ import {Wallet} from "./engine/features/wallet/Wallet";
 import {Settings} from "@/engine/features/settings/Settings";
 import {Statistics} from "@/engine/features/statistics/Statistics";
 import {Achievements} from "@/engine/features/achievements/Achievements";
+import {TimeLine} from "@/game/features/timeline/TimeLine";
+import {Scrap} from "@/game/features/scrap/Scrap";
 
 export class App {
 
@@ -20,6 +22,8 @@ export class App {
 
     static createNewGame(): Game {
         return new Game(
+            new TimeLine(),
+            new Scrap(),
             new Wallet(),
             new Settings(),
             new Statistics(),

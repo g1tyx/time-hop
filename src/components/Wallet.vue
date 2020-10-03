@@ -1,13 +1,12 @@
 <template>
   <div>
-    <p v-if="moneyDisplaySetting.value"> Money: {{ money }}</p>
-    <p v-else> ${{ money }}</p>
+    <p>Scrap: {{ scrap }}</p>
   </div>
 </template>
 
 <script>
 
-import {App} from "src/App.ts";
+import {App} from "@/App.ts";
 import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 
 export default {
@@ -16,13 +15,12 @@ export default {
   data: function () {
     return {
       wallet: App.game.wallet,
-      moneyDisplaySetting: App.game.settings.getSetting('money-display'),
     }
   },
 
   computed: {
-    money() {
-      return this.wallet.currencies[CurrencyType[CurrencyType.money]];
+    scrap() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Scrap]];
     }
   }
 

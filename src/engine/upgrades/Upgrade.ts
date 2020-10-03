@@ -37,7 +37,7 @@ export class Upgrade implements Saveable {
 
     getCost(): Currency {
         if (this.isMaxLevel()) {
-            return new Currency(Infinity, CurrencyType.money);
+            return new Currency(Infinity, CurrencyType.Scrap);
         }
         return this.costList[this.level];
     }
