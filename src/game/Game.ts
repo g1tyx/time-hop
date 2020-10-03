@@ -117,18 +117,19 @@ export class Game {
         }
     }
 
-    public getTotalMoneyMultiplier(): number {
-        let res = 1;
-        for (const feature of this.getAllFeatures()) {
-            res *= feature.getMoneyMultiplier();
-        }
-        return res;
-    }
 
     /**
      * Return all registered features, see this.registerFeature()
      */
     public getAllFeatures(): Feature[] {
         return this.allFeatures;
+    }
+
+    getTotalScrapMultiplier() {
+        let res = 1;
+        for (const feature of this.getAllFeatures()) {
+            res *= feature.getScrapMultiplier();
+        }
+        return res;
     }
 }

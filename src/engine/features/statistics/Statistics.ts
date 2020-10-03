@@ -24,7 +24,7 @@ export class Statistics extends Feature {
     initialize(): void {
         this.registerStatistic(new NumberStatistic(StatisticType.TotalMoneyGained, 'Total money'))
 
-        App.game.wallet.onMoneyGain.subscribe((amount: number) => this.incrementNumberStatistic(StatisticType.TotalMoneyGained, amount));
+        App.game.wallet.onScrapGain.subscribe((amount: number) => this.incrementNumberStatistic(StatisticType.TotalMoneyGained, amount));
     }
 
     incrementNumberStatistic(key: StatisticType, amount = 1): void {

@@ -59,7 +59,7 @@ Instead of having your `Feature`s depend on `Statistics`, it works the other way
 
 ```ts
 this.registerStatistic(new NumberStatistic('totalMoneyGained'))
-App.game.wallet.onMoneyGain.subscribe(amount => this.incrementNumberStatistic('totalMoneyGained', amount));
+App.game.wallet.onScrapGain.subscribe(amount => this.incrementNumberStatistic('totalMoneyGained', amount));
 ```
 
 ##### Settings

@@ -1,13 +1,17 @@
 import {SaveData} from "@/engine/saving/SaveData";
 
 export class WalletSaveData extends SaveData {
-    money: number;
-    other: number;
+    scrap: number;
+    gasoline: number;
+    lightning: number;
+    uranium: number;
 
 
-    constructor(money: number, other: number) {
+    constructor(scrap: number, gasoline: number, lightning: number, uranium: number) {
         super();
-        this.money = money;
-        this.other = other;
+        this.scrap = scrap;
+        this.gasoline = gasoline;
+        this.lightning = lightning;
+        this.uranium = uranium;
     }
 }

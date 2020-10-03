@@ -13,9 +13,6 @@ export abstract class Feature implements Saveable {
         return false;
     }
 
-    getMoneyMultiplier(): number {
-        return 1;
-    }
 
     update(delta: number): void {
         // Override in subclass if needed
@@ -29,4 +26,19 @@ export abstract class Feature implements Saveable {
 
     abstract parseSaveData(json: Record<string, unknown>): SaveData;
 
+    getScrapMultiplier(): number {
+        return 1;
+    }
+
+    getGasolineMultiplier(): number {
+        return 1;
+    }
+
+    getLightningMultiplier(): number {
+        return 1;
+    }
+
+    getUraniumMultiplier(): number {
+        return 1;
+    }
 }

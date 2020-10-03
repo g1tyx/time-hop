@@ -1,4 +1,6 @@
 export enum CurrencyType {
-    money,
-    somethingElse
+    Scrap,
+    Gasoline,
+    Lightning,
+    Uranium,
 }
