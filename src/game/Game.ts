@@ -2,7 +2,6 @@ import {GameState} from "./GameState";
 import {Feature} from "./Feature";
 import {Wallet} from "@/engine/features/wallet/Wallet";
 import {LocalStorage} from "@/engine/saving/LocalStorage";
-import {Example} from "@/game/features/example/Example";
 import {Settings} from "@/engine/features/settings/Settings";
 import {Statistics} from "@/engine/features/statistics/Statistics";
 import {Achievements} from "@/engine/features/achievements/Achievements";
@@ -10,7 +9,6 @@ import {Achievements} from "@/engine/features/achievements/Achievements";
 export class Game {
     private _tickInterval: any;
 
-    public example: Example;
     public wallet: Wallet;
     public settings: Settings;
     public statistics: Statistics;
@@ -22,10 +20,9 @@ export class Game {
 
     private readonly TICK_DURATION_MS = 100.0;
 
-    constructor(example: Example, wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
+    constructor(wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
         this.allFeatures = [];
 
-        this.example = this.registerFeature(example);
         this.wallet = this.registerFeature(wallet)
         this.settings = this.registerFeature(settings);
         this.statistics = this.registerFeature(statistics);

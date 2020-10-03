@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import {App} from "@/App.ts";
-import BooleanSetting from "@/engine/features/settings/BooleanSetting.vue";
+import {App} from "src/App.ts";
+import BooleanSetting from "@/components/BooleanSetting.vue";
 
 export default {
   name: "Settings",

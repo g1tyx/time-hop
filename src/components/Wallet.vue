@@ -7,7 +7,7 @@
 
 <script>
 
-import {App} from "@/App.ts";
+import {App} from "src/App.ts";
 import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 
 export default {
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import './src/index.scss';
+@import '../index';
 
 div {
   background-color: white;

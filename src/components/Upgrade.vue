@@ -7,7 +7,7 @@
 
 <script>
 import {Upgrade} from "@/engine/upgrades/Upgrade.ts";
-import Currency from "@/engine/features/wallet/Currency.vue";
+import Currency from "@/components/Currency.vue";
 
 export default {
   name: "Upgrade",

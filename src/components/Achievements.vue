@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {App} from "@/App.ts"
+import {App} from "src/App.ts"
 
 export default {
   name: "Achievements",

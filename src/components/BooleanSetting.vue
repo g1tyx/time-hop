@@ -10,7 +10,7 @@
 
 <script>
 import {BooleanSetting} from "@/engine/features/settings/BooleanSetting";
-import {App} from "@/App.ts";
+import {App} from "src/App.ts";
 
 export default {
   name: "BooleanSetting",

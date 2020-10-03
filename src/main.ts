@@ -6,8 +6,6 @@ import './VueFilters';
 
 import "./index.scss";
 
-Vue.config.productionTip = false
-
 declare global {
     interface Window {
         App: App;
