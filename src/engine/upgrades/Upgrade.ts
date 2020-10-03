@@ -1,14 +1,14 @@
-import {Saveable} from "../saving/Saveable";
-import {UpgradeSaveData} from "./UpgradeSaveData";
+import {Saveable} from "@/engine/saving/Saveable";
 import {Currency} from "@/engine/features/wallet/Currency";
-import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
-import {App} from "@/App.ts";
+import {App} from "@/App";
+import {UpgradeSaveData} from "@/engine/upgrades/UpgradeSaveData";
 import {UpgradeType} from "@/engine/upgrades/UpgradeType";
 
 /**
  * Generic upgrade class
  */
-export class Upgrade implements Saveable {
+
+export abstract class Upgrade implements Saveable {
     identifier: string;
     type: UpgradeType;
     displayName: string;
@@ -19,42 +19,28 @@ export class Upgrade implements Saveable {
     // (e.g. power is increasing, time is decreasing).
     increasing: boolean;
 
-    // Optional array of costs
-    costList: Currency[] = [];
-    // Optional array of benefits
-    bonusList: number[] = [];
 
-    constructor(identifier: string, type: UpgradeType, displayName: string, maxLevel: number, costList: Currency[], bonusList: number[], increasing = true) {
+    protected constructor(identifier: string, type: UpgradeType, displayName: string, maxLevel: number, increasing = true) {
         this.identifier = identifier;
         this.type = type;
         this.displayName = displayName;
         this.maxLevel = maxLevel;
         this.level = 0;
-        this.costList = costList;
-        this.bonusList = bonusList;
         this.increasing = increasing;
     }
 
-    getCost(): Currency {
-        if (this.isMaxLevel()) {
-            return new Currency(Infinity, CurrencyType.Scrap);
-        }
-        return this.costList[this.level];
-    }
+    abstract getCost(): Currency;
 
-    // Override with a custom function
-    getBonus(level: number = this.level): number {
-        return this.bonusList[level];
-    }
+    abstract getBonus(level: number): number;
 
-    upgradeBonus() {
+    getUpgradeBonus(): number {
         if (!this.isMaxLevel()) {
             return this.getBonus(this.level + 1) - this.getBonus(this.level);
         }
         return 0;
     }
 
-    isMaxLevel() {
+    isMaxLevel(): boolean {
         return this.level >= this.maxLevel;
     }
 
@@ -78,6 +64,7 @@ export class Upgrade implements Saveable {
         this.level = this.level + 1;
     }
 
+
     // Save logic
     saveKey: string = this.identifier;
 
@@ -86,7 +73,7 @@ export class Upgrade implements Saveable {
     }
 
     parseSaveData(json: Record<string, unknown>): UpgradeSaveData {
-        return new UpgradeSaveData(json?.key as string, json?.level as number ?? 0)
+        return new UpgradeSaveData(json?.identifier as string, json?.level as number ?? 0)
     }
 
     save(): UpgradeSaveData {

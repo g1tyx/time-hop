@@ -1,7 +1,11 @@
 <template>
   <button @click="buy" class="btn btn-primary" :class="{'disabled': !canBuy}">
-    <p> {{ upgrade.displayName }}</p>
-    <currency :currency="cost"></currency>
+    <p> {{ upgrade.displayName }} ({{ upgrade.getBonus(upgrade.level) }})</p>
+    <div v-if="upgrade.isMaxLevel()">MAX</div>
+    <div v-else>
+      <currency :currency="cost"></currency>
+      {{ upgrade.increasing ? '+' : '-' }}{{ Math.abs(upgrade.getUpgradeBonus()) | twoDigits }}
+    </div>
   </button>
 </template>
 
@@ -12,10 +16,13 @@ import Currency from "@/components/Currency.vue";
 export default {
   name: "Upgrade",
   components: {
-    'currency' :Currency
+    'currency': Currency
   },
   props: {
-    upgrade: Upgrade
+    upgrade: {
+      type: Upgrade,
+      required: true
+    }
   },
 
   methods: {
