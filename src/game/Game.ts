@@ -7,12 +7,19 @@ import {Statistics} from "@/engine/features/statistics/Statistics";
 import {Achievements} from "@/engine/features/achievements/Achievements";
 import {TimeLine} from "@/game/features/timeline/TimeLine";
 import {Scrap} from "@/game/features/scrap/Scrap";
+import {Gasoline} from "@/game/features/gasoline/Gasoline";
+import {Lightning} from "@/game/features/lightning/Lightning";
+import {Plutonium} from "@/game/features/plutonium/Plutonium";
 
 export class Game {
     private _tickInterval: any;
 
     public timeLine: TimeLine;
+
     public scrap: Scrap;
+    public gasoline: Gasoline;
+    public lightning: Lightning;
+    public plutonium: Plutonium;
 
     public wallet: Wallet;
     public settings: Settings;
@@ -25,12 +32,15 @@ export class Game {
 
     private readonly TICK_DURATION_MS = 100.0;
 
-    constructor(timeLine: TimeLine, scrap: Scrap, wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
+    constructor(timeLine: TimeLine, scrap: Scrap, gasoline: Gasoline, lightning: Lightning, plutonium: Plutonium, wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
         this.allFeatures = [];
 
         this.timeLine = this.registerFeature(timeLine);
 
         this.scrap = this.registerFeature(scrap);
+        this.gasoline = this.registerFeature(gasoline);
+        this.lightning = this.registerFeature(lightning);
+        this.plutonium = this.registerFeature(plutonium);
 
         this.wallet = this.registerFeature(wallet)
         this.settings = this.registerFeature(settings);
@@ -134,11 +144,36 @@ export class Game {
         return this.allFeatures;
     }
 
-    getTotalScrapMultiplier() {
+    getTotalScrapMultiplier(): number {
         let res = 1;
         for (const feature of this.getAllFeatures()) {
             res *= feature.getScrapMultiplier();
         }
         return res;
     }
+
+    getTotalGasolineMultiplier(): number {
+        let res = 1;
+        for (const feature of this.getAllFeatures()) {
+            res *= feature.getGasolineMultiplier();
+        }
+        return res;
+    }
+
+    getLightningMultiplier(): number {
+        let res = 1;
+        for (const feature of this.getAllFeatures()) {
+            res *= feature.getLightningMultiplier();
+        }
+        return res;
+    }
+
+    getPlutoniumMultiplier(): number {
+        let res = 1;
+        for (const feature of this.getAllFeatures()) {
+            res *= feature.getPlutoniumMultiplier();
+        }
+        return res;
+    }
+
 }

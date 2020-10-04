@@ -1,6 +1,9 @@
 <template>
   <div>
     <p>Scrap: {{ scrap }}</p>
+    <p>Gasoline: {{ gasoline }}</p>
+    <p>Lightning: {{ lightning }}</p>
+    <p>Plutonium: {{ plutonium }}</p>
   </div>
 </template>
 
@@ -21,6 +24,15 @@ export default {
   computed: {
     scrap() {
       return this.wallet.currencies[CurrencyType[CurrencyType.Scrap]];
+    },
+    gasoline() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Gasoline]];
+    },
+    lightning() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Lightning]];
+    },
+    plutonium() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Plutonium]];
     }
   }
 

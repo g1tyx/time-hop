@@ -38,7 +38,7 @@ export abstract class Feature implements Saveable {
         return 1;
     }
 
-    getUraniumMultiplier(): number {
+    getPlutoniumMultiplier(): number {
         return 1;
     }
 }

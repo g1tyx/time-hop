@@ -10,7 +10,7 @@ export default {
   name: "TimeLine",
   data() {
     return {
-      scrap: App.game.timeLine
+      timeLine: App.game.timeLine
     }
   },
 

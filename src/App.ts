@@ -5,6 +5,9 @@ import {Statistics} from "@/engine/features/statistics/Statistics";
 import {Achievements} from "@/engine/features/achievements/Achievements";
 import {TimeLine} from "@/game/features/timeline/TimeLine";
 import {Scrap} from "@/game/features/scrap/Scrap";
+import {Gasoline} from "@/game/features/gasoline/Gasoline";
+import {Lightning} from "@/game/features/lightning/Lightning";
+import {Plutonium} from "@/game/features/plutonium/Plutonium";
 
 export class App {
 
@@ -24,6 +27,9 @@ export class App {
         return new Game(
             new TimeLine(),
             new Scrap(),
+            new Gasoline(),
+            new Lightning(),
+            new Plutonium(),
             new Wallet(),
             new Settings(),
             new Statistics(),
