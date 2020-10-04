@@ -6,6 +6,7 @@
     <gasoline></gasoline>
     <lightning></lightning>
     <plutonium></plutonium>
+    <credits></credits>
   </div>
 </template>
 
@@ -18,9 +19,10 @@ import TimeLine from "@/components/features/TimeLine";
 import Gasoline from "@/components/features/Gasoline";
 import Lightning from "@/components/features/Lightning";
 import Plutonium from "@/components/features/Plutonium";
+import Credits from "@/components/Credits";
 export default {
 
-  components: {Plutonium, Lightning, Gasoline, TimeLine, Scrap, Wallet},
+  components: {Credits, Plutonium, Lightning, Gasoline, TimeLine, Scrap, Wallet},
 
   methods: {}
 }

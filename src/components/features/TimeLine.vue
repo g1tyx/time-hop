@@ -3,6 +3,9 @@
     <button @click="timeTravel" :disabled="!canTimeTravel">
       Time travel
     </button>
+    <br>
+    <br>
+    <br>
 
     <div class="vefs-milestone-wrapper">
       <div class="milestone-container">
