@@ -91,5 +91,9 @@ export class Scrap extends Feature {
         for (const upgrade of this.upgrades.list) {
             upgrade.level = 0;
         }
+        for (const action of this.actions) {
+            action.isStarted = false;
+            action.value = 0;
+        }
     }
 }

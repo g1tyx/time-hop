@@ -98,7 +98,7 @@ export default {
     },
     percentage() {
       if (this.timeLine.canAccessScrap) {
-        return 0.8 + 0.2 * this.logProgress(App.game.wallet.getAmount(CurrencyType.Scrap), this.timeLine.SCRAP_GOAL);
+        return Math.min(1, 0.8 + 0.2 * this.logProgress(App.game.wallet.getAmount(CurrencyType.Scrap), this.timeLine.SCRAP_GOAL));
       } else if (this.timeLine.canAccessGasoline) {
         return 0.6;
       } else if (this.timeLine.canAccessLightning) {
