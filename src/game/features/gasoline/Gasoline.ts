@@ -17,7 +17,6 @@ export class Gasoline extends Feature {
     name: string = "Gasoline";
     saveKey: string = "gasoline";
 
-    gasolineUpgrades: UpgradeList<Upgrade, UpgradeSaveData>;
     oilUpgrades: UpgradeList<Upgrade, UpgradeSaveData>;
 
     actions: GasolineAction[]
@@ -37,12 +36,6 @@ export class Gasoline extends Feature {
             ]
         )
 
-
-        this.gasolineUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
-            [
-
-            ]
-        );
 
         this.actions = [
             new GasolineAction(

@@ -1,6 +1,5 @@
 <template>
-  <div v-show="canAccess">
-
+  <div v-if="canAccess">
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>

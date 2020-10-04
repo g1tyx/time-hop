@@ -1,13 +1,14 @@
 <template>
-  <div v-show="canAccess">
-    Gasoline:
-    <boolean-setting :setting="autoConvertOilSetting"></boolean-setting>
+  <div v-if="canAccess">
     <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
       {{ conversionGasolineGain }} Gasoline
+      <boolean-setting :setting="autoConvertOilSetting" :show-description="true"></boolean-setting>
+
     </button>
 
     <div class="oil-upgrades-list">
       <upgrade v-for="upgrade in oilUpgrades" :key="upgrade.identifier" :upgrade="upgrade">
+
       </upgrade>
     </div>
 

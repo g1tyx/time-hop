@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span> {{ setting.displayName }} </span>
+    <span v-if="showDescription"> {{ setting.displayName }} </span>
     <input type="checkbox" :checked="setting.value" v-on:change="change">
   </div>
 
@@ -15,7 +15,10 @@ export default {
   name: "BooleanSetting",
 
   props: {
-    setting: BooleanSetting
+    setting: BooleanSetting,
+    showDescription: {
+      type: Boolean
+    }
   },
 
   methods: {

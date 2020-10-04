@@ -74,7 +74,7 @@ export class Wallet extends Feature {
         this.currencies[CurrencyType[CurrencyType.Plutonium]] = 0;
     }
 
-    public addCurrency(currency: Currency) {
+    private addCurrency(currency: Currency) {
         if (isNaN(currency.amount) || currency.amount <= 0) {
             console.trace(`Could not add currency ${currency.toString()}`);
             return;
@@ -130,7 +130,6 @@ export class Wallet extends Feature {
     public get onOilGain(): ISimpleEvent<number> {
         return this._onOilGain.asEvent();
     }
-
 
     public get onGasolineGain(): ISimpleEvent<number> {
         return this._onGasolineGain.asEvent();

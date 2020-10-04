@@ -32,7 +32,7 @@ export class GasolineAction extends ProgressBar {
     }
 
     gainReward(): void {
-        App.game.wallet.addCurrency(this.reward());
+        App.game.wallet.gainOil(this.reward().amount);
 
     }
 

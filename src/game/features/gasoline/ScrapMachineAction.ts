@@ -29,8 +29,7 @@ export class ScrapMachineAction extends GasolineAction {
     }
 
     gainReward(): void {
-        App.game.wallet.addCurrency(this.reward());
-
+        App.game.wallet.gainScrap(this.reward().amount);
     }
 
 }

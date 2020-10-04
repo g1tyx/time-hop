@@ -11,7 +11,7 @@ export class Settings extends Feature {
     list: Setting[] = [];
 
     initialize(): void {
-        this.add(new BooleanSetting('auto-convert-oil', 'Automatically convert oil to gasoline', false));
+        this.add(new BooleanSetting('auto-convert-oil', 'Auto', false));
     }
 
     public add(setting: Setting): void {
