@@ -1,11 +1,20 @@
 <template>
   <div v-if="canAccess">
+
+    <h3>Machines</h3>
+    <div class="action-list">
+      <gasoline-action v-for="action in availableActions" :key="action.description" :action="action">
+      </gasoline-action>
+    </div>
+
+    <h3>Convert</h3>
     <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
       {{ conversionGasolineGain }} Gasoline
       <boolean-setting :setting="autoConvertOilSetting" :show-description="true"></boolean-setting>
 
     </button>
 
+    <h3>Upgrades</h3>
     <div class="oil-upgrades-list">
       <upgrade v-for="upgrade in oilUpgrades" :key="upgrade.identifier" :upgrade="upgrade">
 
@@ -13,14 +22,12 @@
     </div>
 
 
-    <div class="speedup-list">
-      <oil-speedup v-for="(speedup, index) in oilSpeedups" :key="speedup.label" :oil-speedup="speedup" :index="index">
-      </oil-speedup>
-    </div>
-
-    <div class="action-list">
-      <gasoline-action v-for="action in availableActions" :key="action.description" :action="action">
-      </gasoline-action>
+    <div v-if="hasOilSpeedups">
+      <h3>Grease those machines!</h3>
+      <div class="speedup-list">
+        <oil-speedup v-for="(speedup, index) in oilSpeedups" :key="speedup.label" :oil-speedup="speedup" :index="index">
+        </oil-speedup>
+      </div>
     </div>
 
 
@@ -33,6 +40,7 @@ import Upgrade from "@/components/Upgrade";
 import GasolineAction from "@/components/GasolineAction";
 import BooleanSetting from "@/components/BooleanSetting";
 import OilSpeedup from "@/components/OilSpeedup";
+import {SingleLevelUpgrade} from "@/engine/upgrades/SingleLevelUpgrade";
 
 export default {
 
@@ -56,6 +64,9 @@ export default {
     },
     availableActions() {
       return this.gasoline.actions.filter(action => action.requirements.isCompleted());
+    },
+    hasOilSpeedups() {
+      return this.gasoline.oilUpgrades.getUpgrade("gasoline-unlock-oil-speedup").isBought();
     },
     oilSpeedups() {
       return this.gasoline.oilSpeedups;
