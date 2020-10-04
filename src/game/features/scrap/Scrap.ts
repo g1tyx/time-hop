@@ -43,7 +43,7 @@ export class Scrap extends Feature {
                     [25, 50, 75, 100, 125, 150, 175, 200, 225, 250], true),
                 new DiscreteUpgrade("scrap-plunder-copper-value", UpgradeType.ScrapValue, "Copper value", 9,
                     CurrencyBuilder.createArray([1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000], CurrencyType.Scrap),
-                    [25, 50, 75, 100, 125, 150, 175, 200, 225, 250], true),
+                    [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], true),
                 new DiscreteUpgrade("scrap-automation-speed", UpgradeType.ScrapAutomationSpeed, "Speedup all actions", 10,
                     CurrencyBuilder.createArray([50, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000], CurrencyType.Scrap),
                     [1, 1.5, 2.0, 2.5, 3, 4, 5, 7.5, 10, 12.5, 15, 20], true),
@@ -52,9 +52,9 @@ export class Scrap extends Feature {
 
         this.actions = [
             new ScrapAction("Dig for scraps", 2, "scrap-unlock-dig-automation", "scrap-dig-value"),
-            new ScrapAction("Metal detector", 6, "scrap-unlock-metal-detector-automation", "scrap-metal-detector-value", new MultiRequirement([new StatisticRequirement(StatisticType.TotalScrapGained, 8)])),
-            new ScrapAction("Recycle stuff", 20, "scrap-unlock-recycle-automation", "scrap-recycle-value", new MultiRequirement([new StatisticRequirement(StatisticType.TotalScrapGained, 100)])),
-            new ScrapAction("Plunder copper ", 50, "scrap-unlock-plunder-copper-automation", "scrap-plunder-copper-value", new MultiRequirement([new StatisticRequirement(StatisticType.TotalScrapGained, 1000)])),
+            new ScrapAction("Metal detector", 6, "scrap-unlock-metal-detector-automation", "scrap-metal-detector-value", new MultiRequirement([new StatisticRequirement(StatisticType.TotalScrapGainedThisPrestige, 8)])),
+            new ScrapAction("Recycle stuff", 20, "scrap-unlock-recycle-automation", "scrap-recycle-value", new MultiRequirement([new StatisticRequirement(StatisticType.TotalScrapGainedThisPrestige, 100)])),
+            new ScrapAction("Plunder copper ", 50, "scrap-unlock-plunder-copper-automation", "scrap-plunder-copper-value", new MultiRequirement([new StatisticRequirement(StatisticType.TotalScrapGainedThisPrestige, 1000)])),
         ]
     }
 

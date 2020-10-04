@@ -19,6 +19,8 @@ export class TimeLine extends Feature {
     canAccessLightning: boolean = false;
     canAccessPlutonium: boolean = false;
 
+    public readonly SCRAP_GOAL: number = 10000;
+
     constructor() {
         super();
         this.state = TimeLineState.Scrap;
@@ -90,7 +92,7 @@ export class TimeLine extends Feature {
     }
 
     canTimeTravel() {
-        return App.game.wallet.hasCurrency(new Currency(1000000, CurrencyType.Scrap));
+        return App.game.wallet.hasCurrency(new Currency(this.SCRAP_GOAL, CurrencyType.Scrap));
     }
 
     load(data: TimeLineSaveData): void {
