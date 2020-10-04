@@ -39,18 +39,19 @@ export class TimeLine extends Feature {
                 break;
             case TimeLineState.Gasoline:
                 this.state = TimeLineState.Lightning
-                App.game.wallet.gainLightning(1)
+                App.game.wallet.gainLightning(1);
                 break;
             case TimeLineState.Lightning:
                 this.state = TimeLineState.Plutonium
-                App.game.wallet.gainPlutonium(1)
+                App.game.wallet.gainPlutonium(1);
                 break;
             case TimeLineState.Plutonium:
                 this.state = TimeLineState.FluxCapacitor
-                App.game.wallet.gainPlutonium(10)
+                App.game.wallet.gainPlutonium(10);
                 break;
             case TimeLineState.FluxCapacitor:
                 console.log("You win, good job mate");
+                App.game.wallet.gainPlutonium(1);
                 break;
         }
     }
