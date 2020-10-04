@@ -5,17 +5,22 @@
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
+    <div class="action-list">
+      <scrap-action v-for="action in availableActions" :key="action.description" :action="action">
+      </scrap-action>
+    </div>
   </div>
 </template>
 
 <script>
 import {App} from "@/App.ts";
 import Upgrade from "@/components/Upgrade";
+import ScrapAction from "@/components/ScrapAction";
 
 export default {
 
   name: "Scrap",
-  components: {Upgrade},
+  components: {ScrapAction, Upgrade},
   data() {
     return {
       scrap: App.game.scrap
@@ -37,6 +42,9 @@ export default {
 
     upgrades() {
       return this.scrap.upgrades.list;
+    },
+    availableActions() {
+      return this.scrap.actions.filter(action => action.requirements.isCompleted());
     }
   }
 }

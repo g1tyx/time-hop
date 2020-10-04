@@ -76,6 +76,10 @@ export class Wallet extends Feature {
         return this.currencies[CurrencyType[currency.type]] >= currency.amount;
     }
 
+    public getAmount(type: CurrencyType): number {
+        return this.currencies[CurrencyType[type]];
+    }
+
     public loseCurrency(currency: Currency) {
         if (isNaN(currency.amount) || currency.amount <= 0) {
             console.trace(`Could not lose currency ${currency.toString()}`);

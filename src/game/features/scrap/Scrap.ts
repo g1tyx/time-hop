@@ -11,6 +11,9 @@ import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 import {DiscreteUpgrade} from "@/engine/upgrades/DiscreteUpgrade";
 import {SingleLevelUpgrade} from "@/engine/upgrades/SingleLevelUpgrade";
 import {Currency} from "@/engine/features/wallet/Currency";
+import {ScrapAction} from "@/game/features/scrap/ScrapAction";
+import {MultiRequirement} from "@/engine/requirements/MultiRequirement";
+import {CurrencyRequirement} from "@/engine/features/wallet/CurrencyRequirement";
 
 export class Scrap extends Feature {
     name: string = "Scrap";
@@ -19,6 +22,8 @@ export class Scrap extends Feature {
     upgrades: UpgradeList<Upgrade, UpgradeSaveData>;
 
     nextScrapGain: number;
+
+    actions: ScrapAction[]
 
     constructor() {
         super();
@@ -34,7 +39,10 @@ export class Scrap extends Feature {
             ]
         );
 
-
+        this.actions = [
+            new ScrapAction("Dig for scraps", 1, 1),
+            new ScrapAction("Dig for scraps but harder", 1, 5, new MultiRequirement([new CurrencyRequirement(10, CurrencyType.Scrap)])),
+        ]
         this.nextScrapGain = Date.now();
     }
 
@@ -58,6 +66,10 @@ export class Scrap extends Feature {
     update(delta: number) {
         if (!this.canAccess()) {
             return;
+        }
+
+        for (const action of this.actions) {
+            action.progress(delta);
         }
         if (this.hasScrapAutomation()) {
             if (Date.now() > this.nextScrapGain) {
