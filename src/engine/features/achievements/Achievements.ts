@@ -1,6 +1,5 @@
 import {Feature} from "@/game/Feature";
 import {Achievement} from "@/engine/features/achievements/Achievement";
-import {TotalMoneyRequirement} from "@/engine/requirements/TotalMoneyRequirement";
 import {AchievementType} from "@/engine/features/achievements/AchievementType";
 import {AchievementsSaveData} from "@/engine/features/achievements/AchievementsSaveData";
 
@@ -17,13 +16,6 @@ export class Achievements extends Feature {
     constructor() {
         super();
         this.list = {} as Record<AchievementType, Achievement>;
-    }
-
-    initialize(): void {
-        this.registerAchievement(new Achievement(AchievementType.TotalMoney10, 'Small potatoes', 'Have 10 total money', new TotalMoneyRequirement(10)))
-        this.registerAchievement(new Achievement(AchievementType.TotalMoney100, 'Medium potatoes', 'Have 100 total money', new TotalMoneyRequirement(100)))
-        this.registerAchievement(new Achievement(AchievementType.TotalMoney1000, 'Larger potatoes', 'Have 1000 total money', new TotalMoneyRequirement(1000)))
-        this.registerAchievement(new Achievement(AchievementType.TotalMoney10000, 'Big potatoes', 'Have 10000 total money', new TotalMoneyRequirement(10000)))
     }
 
 

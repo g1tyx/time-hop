@@ -13,7 +13,8 @@ import {SingleLevelUpgrade} from "@/engine/upgrades/SingleLevelUpgrade";
 import {Currency} from "@/engine/features/wallet/Currency";
 import {ScrapAction} from "@/game/features/scrap/ScrapAction";
 import {MultiRequirement} from "@/engine/requirements/MultiRequirement";
-import {CurrencyRequirement} from "@/engine/features/wallet/CurrencyRequirement";
+import {StatisticRequirement} from "@/engine/requirements/StatisticRequirement";
+import {StatisticType} from "@/engine/features/statistics/StatisticType";
 
 export class Scrap extends Feature {
     name: string = "Scrap";
@@ -21,47 +22,29 @@ export class Scrap extends Feature {
 
     upgrades: UpgradeList<Upgrade, UpgradeSaveData>;
 
-    nextScrapGain: number;
-
     actions: ScrapAction[]
 
     constructor() {
         super();
         this.upgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
             [
-                new DiscreteUpgrade("scrap-manual", UpgradeType.ScrapManual, "Gain more scraps while digging", 5,
-                    CurrencyBuilder.createArray([10, 25, 50, 100, 250], CurrencyType.Scrap),
-                    [0, 1, 2, 3, 4, 5], true),
-                new SingleLevelUpgrade("scrap-unlock-automation", UpgradeType.ScrapAutomation, "Automatically produce scrap", new Currency(100, CurrencyType.Scrap), 1),
-                new DiscreteUpgrade("scrap-automation-time", UpgradeType.ScrapAutomationSpeed, "Scrap automation time", 10,
+                new SingleLevelUpgrade("scrap-unlock-dig-automation", UpgradeType.ScrapAutomation, "Automatically dig for scraps", new Currency(100, CurrencyType.Scrap), 1),
+                new SingleLevelUpgrade("scrap-unlock-recycle-automation", UpgradeType.ScrapAutomation, "Automatically recycle stuff", new Currency(100, CurrencyType.Scrap), 1),
+                new DiscreteUpgrade("scrap-dig-value", UpgradeType.ScrapValue, "Dig value", 10,
+                    CurrencyBuilder.createArray([10, 25, 50, 100, 250, 500, 750, 1000, 2500, 5000], CurrencyType.Scrap),
+                    [1, 1.25, 1.5, 1.75, 2, 2.33, 2.66, 3, 3.5, 4, 5], true),
+                new DiscreteUpgrade("scrap-recycle-value", UpgradeType.ScrapValue, "Recycle value", 10,
                     CurrencyBuilder.createArray([100, 250, 500, 1000, 2500, 5000, 7500, 10000, 25000, 50000], CurrencyType.Scrap),
-                    [1, 0.9, 0.85, 0.8, 0.766, 0.633, 0.6, 0.575, 0.55, 0.525, 0.5], false),
+                    [1, 1.25, 1.5, 1.75, 2, 2.33, 2.66, 3, 3.5, 4, 5], true),
             ]
         );
 
         this.actions = [
-            new ScrapAction("Dig for scraps", 1, 1),
-            new ScrapAction("Dig for scraps but harder", 1, 5, new MultiRequirement([new CurrencyRequirement(10, CurrencyType.Scrap)])),
+            new ScrapAction("Dig for scraps", 5, 1, "scrap-unlock-dig-automation", "scrap-dig-value"),
+            new ScrapAction("Recycle stuff ", 10, 5, "scrap-unlock-recycle-automation", "scrap-recycle-value", new MultiRequirement([new StatisticRequirement(StatisticType.TotalScrapGained, 10)])),
         ]
-        this.nextScrapGain = Date.now();
     }
 
-
-    scrapGainManual(): number {
-        return 1 + (this.upgrades.getUpgrade("scrap-manual") as DiscreteUpgrade).getBonus();
-    }
-
-    scrapAutomationTime(): number {
-        return (this.upgrades.getUpgrade("scrap-automation-time") as DiscreteUpgrade).getBonus() * 1000;
-    }
-
-    hasScrapAutomation(): boolean {
-        return (this.upgrades.getUpgrade("scrap-unlock-automation") as SingleLevelUpgrade).isBought();
-    }
-
-    digForScraps() {
-        App.game.wallet.gainScrap(this.scrapGainManual());
-    }
 
     update(delta: number) {
         if (!this.canAccess()) {
@@ -70,12 +53,6 @@ export class Scrap extends Feature {
 
         for (const action of this.actions) {
             action.progress(delta);
-        }
-        if (this.hasScrapAutomation()) {
-            if (Date.now() > this.nextScrapGain) {
-                App.game.wallet.gainScrap(10);
-                this.nextScrapGain = Date.now() + this.scrapAutomationTime();
-            }
         }
     }
 

@@ -1,6 +1,7 @@
 <template>
   <button @click="start" class="btn btn-primary">
    {{action.description}} {{action.percentage}}
+    (+ {{this.action.scrapReward()}} scraps)
   </button>
 </template>
 

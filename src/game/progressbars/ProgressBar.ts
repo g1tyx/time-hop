@@ -25,6 +25,9 @@ export abstract class ProgressBar {
 
     public progress(delta: number) {
         if (!this.isStarted) {
+            if (this.canRepeat()) {
+                this.start();
+            }
             return;
         }
         this.value = Math.min(this.goal, this.value + delta);

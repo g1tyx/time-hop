@@ -1,6 +1,5 @@
 <template>
   <div v-show="canAccess">
-    <button @click="dig">Get Scraps (+{{scrapGainManual}})</button>
 
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
@@ -23,13 +22,11 @@ export default {
   components: {ScrapAction, Upgrade},
   data() {
     return {
-      scrap: App.game.scrap
+      statistic: App.game.statistics,
+      scrap: App.game.scrap,
     }
   },
   methods: {
-    dig() {
-      this.scrap.digForScraps();
-    }
   },
 
   computed: {

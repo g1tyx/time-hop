@@ -22,9 +22,15 @@ export class Statistics extends Feature {
     }
 
     initialize(): void {
-        this.registerStatistic(new NumberStatistic(StatisticType.TotalMoneyGained, 'Total money'))
+        this.registerStatistic(new NumberStatistic(StatisticType.TotalScrapGained, 'Total scrap'))
+        this.registerStatistic(new NumberStatistic(StatisticType.TotalGasolineGained, 'Total gasoline'))
+        this.registerStatistic(new NumberStatistic(StatisticType.TotalLightningGained, 'Total lightning'))
+        this.registerStatistic(new NumberStatistic(StatisticType.TotalPlutoniumGained, 'Total plutonium'))
 
-        App.game.wallet.onScrapGain.subscribe((amount: number) => this.incrementNumberStatistic(StatisticType.TotalMoneyGained, amount));
+        App.game.wallet.onScrapGain.subscribe((amount: number) => this.incrementNumberStatistic(StatisticType.TotalScrapGained, amount));
+        App.game.wallet.onGasolineGain.subscribe((amount: number) => this.incrementNumberStatistic(StatisticType.TotalGasolineGained, amount));
+        App.game.wallet.onLightningGain.subscribe((amount: number) => this.incrementNumberStatistic(StatisticType.TotalLightningGained, amount));
+        App.game.wallet.onPlutoniumGain.subscribe((amount: number) => this.incrementNumberStatistic(StatisticType.TotalPlutoniumGained, amount));
     }
 
     incrementNumberStatistic(key: StatisticType, amount = 1): void {

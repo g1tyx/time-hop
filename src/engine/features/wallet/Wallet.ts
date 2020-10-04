@@ -115,4 +115,16 @@ export class Wallet extends Feature {
         return this._onScrapGain.asEvent();
     }
 
+    public get onGasolineGain(): ISimpleEvent<number> {
+        return this._onGasolineGain.asEvent();
+    }
+
+    public get onLightningGain(): ISimpleEvent<number> {
+        return this._onLightningGain.asEvent();
+    }
+
+    public get onPlutoniumGain(): ISimpleEvent<number> {
+        return this._onPlutoniumGain.asEvent();
+    }
+
 }

@@ -1,7 +1,7 @@
 export enum UpgradeType {
     ScrapManual,
     ScrapAutomation,
-    ScrapAutomationValue,
+    ScrapValue,
     ScrapAutomationSpeed,
     ScrapAutomationACriticalChance,
 }
