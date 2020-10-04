@@ -1,6 +1,7 @@
 <template>
   <div>
     <p v-show="timeLine.canAccessScrap">Scrap: {{ scrap }}</p>
+    <p v-show="timeLine.canAccessGasoline">Oil: {{ oil }}</p>
     <p v-show="timeLine.canAccessGasoline">Gasoline: {{ gasoline }}</p>
     <p v-show="timeLine.canAccessLightning">Lightning: {{ lightning }}</p>
     <p v-show="timeLine.canAccessPlutonium">Plutonium: {{ plutonium }}</p>
@@ -25,6 +26,9 @@ export default {
   computed: {
     scrap() {
       return this.wallet.currencies[CurrencyType[CurrencyType.Scrap]];
+    },
+    oil() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Oil]];
     },
     gasoline() {
       return this.wallet.currencies[CurrencyType[CurrencyType.Gasoline]];

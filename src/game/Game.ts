@@ -35,6 +35,8 @@ export class Game {
     constructor(timeLine: TimeLine, scrap: Scrap, gasoline: Gasoline, lightning: Lightning, plutonium: Plutonium, wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
         this.allFeatures = [];
 
+        this.statistics = this.registerFeature(statistics);
+
         this.timeLine = this.registerFeature(timeLine);
 
         this.scrap = this.registerFeature(scrap);
@@ -44,7 +46,6 @@ export class Game {
 
         this.wallet = this.registerFeature(wallet)
         this.settings = this.registerFeature(settings);
-        this.statistics = this.registerFeature(statistics);
         this.achievements = this.registerFeature(achievements);
 
         this.state = GameState.starting;

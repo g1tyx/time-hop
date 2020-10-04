@@ -2,6 +2,7 @@ import {ProgressBar} from "@/game/progressbars/ProgressBar";
 import {App} from "@/App";
 import {MultiRequirement} from "@/engine/requirements/MultiRequirement";
 import {Currency} from "@/engine/features/wallet/Currency";
+import {DiscreteUpgrade} from "@/engine/upgrades/DiscreteUpgrade";
 
 export class GasolineAction extends ProgressBar {
     description: string;
@@ -17,11 +18,6 @@ export class GasolineAction extends ProgressBar {
 
 
     start() {
-        if (!App.game.wallet.hasCurrency(this.cost)) {
-            return;
-        }
-
-        App.game.wallet.loseCurrency(this.cost);
         if (this.isStarted) {
             console.warn("Cannot start twice");
             return;
@@ -31,17 +27,17 @@ export class GasolineAction extends ProgressBar {
     }
 
     canRepeat(): boolean {
-        return true;
+        return (App.game.gasoline.upgrades.getUpgrade(this.valueUpgrade) as DiscreteUpgrade).level > 0;
     }
 
-    gasolineReward(): number {
+    oilReward(): number {
         return 1;
         // const upgrade = (App.game.gasoline.upgrades.getUpgrade(this.valueUpgrade) as DiscreteUpgrade);
         // return upgrade.getBonus();
     }
 
     gainReward(): void {
-        App.game.wallet.gainGasoline(this.gasolineReward());
+        App.game.wallet.gainOil(this.oilReward());
 
     }
 

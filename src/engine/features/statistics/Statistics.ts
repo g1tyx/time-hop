@@ -24,11 +24,13 @@ export class Statistics extends Feature {
 
     initialize(): void {
         this.registerStatistic(new NumberStatistic(StatisticType.TotalScrapGained, 'Total scrap'))
+        this.registerStatistic(new NumberStatistic(StatisticType.TotalOilGained, 'Total oil'))
         this.registerStatistic(new NumberStatistic(StatisticType.TotalGasolineGained, 'Total gasoline'))
         this.registerStatistic(new NumberStatistic(StatisticType.TotalLightningGained, 'Total lightning'))
         this.registerStatistic(new NumberStatistic(StatisticType.TotalPlutoniumGained, 'Total plutonium'))
 
         this.registerStatistic(new NumberStatistic(StatisticType.TotalScrapGainedThisPrestige, 'Total scrap this prestige'))
+        this.registerStatistic(new NumberStatistic(StatisticType.TotalOilGainedThisPrestige, 'Total oil this prestige'))
         this.registerStatistic(new NumberStatistic(StatisticType.TotalGasolineGainedThisPrestige, 'Total gasoline this prestige'))
         this.registerStatistic(new NumberStatistic(StatisticType.TotalLightningGainedThisPrestige, 'Total lightning this prestige'))
         this.registerStatistic(new NumberStatistic(StatisticType.TotalPlutoniumGainedThisPrestige, 'Total plutonium this prestige'))
@@ -37,10 +39,13 @@ export class Statistics extends Feature {
             this.incrementNumberStatistic(StatisticType.TotalScrapGained, amount)
             this.incrementNumberStatistic(StatisticType.TotalScrapGainedThisPrestige, amount)
         });
+        App.game.wallet.onOilGain.subscribe((amount: number) => {
+            this.incrementNumberStatistic(StatisticType.TotalOilGained, amount)
+            this.incrementNumberStatistic(StatisticType.TotalOilGainedThisPrestige, amount)
+        });
         App.game.wallet.onGasolineGain.subscribe((amount: number) => {
             this.incrementNumberStatistic(StatisticType.TotalGasolineGained, amount)
             this.incrementNumberStatistic(StatisticType.TotalGasolineGainedThisPrestige, amount)
-
         });
         App.game.wallet.onLightningGain.subscribe((amount: number) => {
             this.incrementNumberStatistic(StatisticType.TotalLightningGained, amount)
@@ -50,12 +55,15 @@ export class Statistics extends Feature {
             this.incrementNumberStatistic(StatisticType.TotalPlutoniumGained, amount)
             this.incrementNumberStatistic(StatisticType.TotalPlutoniumGainedThisPrestige, amount)
         });
+
     }
 
     getCurrencyStatisticThisPrestige(type: CurrencyType): NumberStatistic {
         switch (type) {
             case CurrencyType.Scrap:
                 return this.getStatistic(StatisticType.TotalScrapGainedThisPrestige) as NumberStatistic;
+            case CurrencyType.Oil:
+                return this.getStatistic(StatisticType.TotalOilGained) as NumberStatistic;
             case CurrencyType.Gasoline:
                 return this.getStatistic(StatisticType.TotalGasolineGainedThisPrestige) as NumberStatistic;
             case CurrencyType.Lightning:

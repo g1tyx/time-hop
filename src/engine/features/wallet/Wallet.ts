@@ -12,6 +12,7 @@ export class Wallet extends Feature {
     currencies: { [key: string]: number } = {}
 
     private _onScrapGain = new SimpleEventDispatcher<number>();
+    private _onOilGain = new SimpleEventDispatcher<number>();
     private _onGasolineGain = new SimpleEventDispatcher<number>();
     private _onLightningGain = new SimpleEventDispatcher<number>();
     private _onPlutoniumGain = new SimpleEventDispatcher<number>();
@@ -20,6 +21,7 @@ export class Wallet extends Feature {
         super();
         this.currencies[CurrencyType[CurrencyType.Scrap]] = 0;
         this.currencies[CurrencyType[CurrencyType.Gasoline]] = 0;
+        this.currencies[CurrencyType[CurrencyType.Oil]] = 0;
         this.currencies[CurrencyType[CurrencyType.Lightning]] = 0;
         this.currencies[CurrencyType[CurrencyType.Plutonium]] = 0;
     }
@@ -30,6 +32,14 @@ export class Wallet extends Feature {
         this._onScrapGain.dispatch(scrap);
         this.addCurrency(new Currency(scrap, CurrencyType.Scrap));
         return scrap;
+    }
+
+    public gainOil(base: number): number {
+        const oil = base;
+
+        this._onScrapGain.dispatch(oil);
+        this.addCurrency(new Currency(oil, CurrencyType.Oil));
+        return oil;
     }
 
     public gainGasoline(base: number): number {
@@ -59,6 +69,7 @@ export class Wallet extends Feature {
     public loseAll() {
         this.currencies[CurrencyType[CurrencyType.Scrap]] = 0;
         this.currencies[CurrencyType[CurrencyType.Gasoline]] = 0;
+        this.currencies[CurrencyType[CurrencyType.Oil]] = 0;
         this.currencies[CurrencyType[CurrencyType.Lightning]] = 0;
         this.currencies[CurrencyType[CurrencyType.Plutonium]] = 0;
     }
@@ -94,6 +105,7 @@ export class Wallet extends Feature {
     load(data: WalletSaveData): void {
         this.currencies[CurrencyType[CurrencyType.Scrap]] = data.scrap;
         this.currencies[CurrencyType[CurrencyType.Gasoline]] = data.gasoline;
+        this.currencies[CurrencyType[CurrencyType.Oil]] = data.gasoline;
         this.currencies[CurrencyType[CurrencyType.Lightning]] = data.lightning;
         this.currencies[CurrencyType[CurrencyType.Plutonium]] = data.uranium;
     }
@@ -114,6 +126,11 @@ export class Wallet extends Feature {
     public get onScrapGain(): ISimpleEvent<number> {
         return this._onScrapGain.asEvent();
     }
+
+    public get onOilGain(): ISimpleEvent<number> {
+        return this._onOilGain.asEvent();
+    }
+
 
     public get onGasolineGain(): ISimpleEvent<number> {
         return this._onGasolineGain.asEvent();

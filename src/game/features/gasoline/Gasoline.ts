@@ -7,6 +7,9 @@ import {GasolineSaveData} from "@/game/features/gasoline/GasolineSaveData";
 import {GasolineAction} from "@/game/features/gasoline/GasolineAction";
 import {Currency} from "@/engine/features/wallet/Currency";
 import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
+import {DiscreteUpgrade} from "@/engine/upgrades/DiscreteUpgrade";
+import {UpgradeType} from "@/engine/upgrades/UpgradeType";
+import {CurrencyBuilder} from "@/engine/features/wallet/CurrencyBuilder";
 
 export class Gasoline extends Feature {
     name: string = "Gasoline";
@@ -20,7 +23,10 @@ export class Gasoline extends Feature {
     constructor() {
         super();
         this.upgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
-            []
+            [
+                new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "First machine", 3,
+                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [1, 2, 3, 4], true)
+            ]
         );
 
         this.actions = [
@@ -34,9 +40,12 @@ export class Gasoline extends Feature {
         if (!this.canAccess()) {
             return;
         }
-        if (Date.now() > this.nextGasolineGain) {
-            App.game.wallet.gainGasoline(1);
-            this.nextGasolineGain = Date.now() + 1000;
+
+        // const speedMultiplier = (this.upgrades.getUpgrade("gasoline-automation-speed") as DiscreteUpgrade).getBonus();
+        const speedMultiplier = 1;
+        for (const action of this.actions) {
+
+            action.progress(delta * speedMultiplier);
         }
     }
 

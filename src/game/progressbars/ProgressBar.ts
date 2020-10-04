@@ -15,6 +15,7 @@ export abstract class ProgressBar {
     }
 
     public start() {
+        console.log("starting");
         if (this.isStarted) {
             console.warn("Cannot start twice");
             return;

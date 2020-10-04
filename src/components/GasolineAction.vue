@@ -1,7 +1,7 @@
 <template>
   <button class="btn btn-primary" data-progress-style="fill-back" :disabled="action.isStarted">
     {{ action.description }}
-    (+{{ this.action.gasolineReward() }})
+    (+{{ this.action.oilReward() }})
     <div class="progress">
       <div class="progress-bar" role="progressbar" :aria-valuenow="action.percentage * 100"
            :style="{'width': action.percentage * 100 + '%'}" aria-valuemin="0" aria-valuemax="100"></div>
