@@ -41,10 +41,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../index';
-
-div {
-  background-color: white;
-  color: $primary-color
-}
 </style>
