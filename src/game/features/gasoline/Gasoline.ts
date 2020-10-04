@@ -12,6 +12,7 @@ import {UpgradeType} from "@/engine/upgrades/UpgradeType";
 import {CurrencyBuilder} from "@/engine/features/wallet/CurrencyBuilder";
 import {OilSpeedup} from "@/game/features/gasoline/OilSpeedup";
 import {ScrapMachineAction} from "@/game/features/gasoline/ScrapMachineAction";
+import {SingleLevelUpgrade} from "@/engine/upgrades/SingleLevelUpgrade";
 
 export class Gasoline extends Feature {
     name: string = "Gasoline";
@@ -29,10 +30,24 @@ export class Gasoline extends Feature {
 
     constructor() {
         super();
+
+        this.oilUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>([]);
+        this.actions = [];
+        this.oilSpeedups = [];
+        this.conversionCount = 0;
+        this.selectedOilSpeedup = 0;
+    }
+
+    initialize() {
         this.oilUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
             [
                 new DiscreteUpgrade("oil-global-value", UpgradeType.OilValue, "Increase oil value", 3,
-                    CurrencyBuilder.createArray([25, 50, 100], CurrencyType.Oil), [1, 2, 3, 4], true)
+                    CurrencyBuilder.createArray([20, 50, 100], CurrencyType.Oil), [1, 2, 3, 4], true),
+                new DiscreteUpgrade("gasoline-machine-speed", UpgradeType.GasolineMachineSpeed, "Increase action speed", 5,
+                    CurrencyBuilder.createArray([30, 100, 500, 1000, 5000], CurrencyType.Oil), [1, 1.5, 2, 3, 4, 5], true),
+                new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Improve conversion gain", 5,
+                    CurrencyBuilder.createArray([40, 80, 150, 300, 450], CurrencyType.Oil), [1.0, 1.1, 1.2, 1.5, 1.7, 2], true),
+                new SingleLevelUpgrade("gasoline-unlock-oil-speedup", UpgradeType.UnlockOilSpeedup, "Unlock Greasing", new Currency(100, CurrencyType.Oil), 1),
             ]
         )
 
@@ -41,12 +56,12 @@ export class Gasoline extends Feature {
             new GasolineAction(
                 1,
                 new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "Dig randomly", 3,
-                CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
             ),
             new GasolineAction(
                 3,
                 new DiscreteUpgrade("gasoline-second-machine", UpgradeType.GasolineMachine, "Purify the Ocean", 3,
-                CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
             ),
             new GasolineAction(
                 10,
@@ -61,7 +76,7 @@ export class Gasoline extends Feature {
             new ScrapMachineAction(
                 50,
                 new DiscreteUpgrade("gasoline-scrap-machine", UpgradeType.GasolineMachine, "Scrap Machine", 3,
-                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                    CurrencyBuilder.createArray([App.game.timeLine.GASOLINE_GOAL, App.game.timeLine.GASOLINE_GOAL * 2, App.game.timeLine.GASOLINE_GOAL * 3], CurrencyType.Gasoline), [0, 1, 2, 3], true)
             )
         ]
 
@@ -74,10 +89,7 @@ export class Gasoline extends Feature {
             new OilSpeedup("5x", 1000, 5),
         ]
 
-        this.conversionCount = 0;
-        this.selectedOilSpeedup = 0;
     }
-
 
     getOilMultiplier(): number {
         return this.oilUpgrades.getTotalMultiplierForType(UpgradeType.OilValue);
@@ -88,7 +100,7 @@ export class Gasoline extends Feature {
     }
 
     conversionGasolineGain(): number {
-        return 1
+        return this.oilUpgrades.getTotalMultiplierForType(UpgradeType.GasolineConversionValue);
     }
 
     convertOil() {
@@ -116,8 +128,7 @@ export class Gasoline extends Feature {
             }
         }
 
-        // const speedMultiplier = (this.gasolineUpgrades.getUpgrade("gasoline-automation-speed") as DiscreteUpgrade).getBonus();
-        const speedMultiplier = 1;
+        const speedMultiplier = (this.oilUpgrades.getUpgrade("gasoline-machine-speed") as DiscreteUpgrade).getBonus();
 
         // Oil speedups
         const speedup = this.oilSpeedups[this.selectedOilSpeedup];
