@@ -2,16 +2,24 @@
   <div v-show="canAccess">
     Gasoline:
     <boolean-setting :setting="autoConvertOilSetting"></boolean-setting>
-    <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to {{conversionGasolineGain}} Gasoline</button>
+    <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
+      {{ conversionGasolineGain }} Gasoline
+    </button>
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
 
+    <div class="speedup-list">
+      <oil-speedup v-for="(speedup, index) in oilSpeedups" :key="speedup.label" :oil-speedup="speedup" :index="index">
+      </oil-speedup>
+    </div>
 
     <div class="action-list">
       <gasoline-action v-for="action in availableActions" :key="action.description" :action="action">
       </gasoline-action>
     </div>
+
+
   </div>
 </template>
 
@@ -20,11 +28,12 @@ import {App} from "@/App.ts";
 import Upgrade from "@/components/Upgrade";
 import GasolineAction from "@/components/GasolineAction";
 import BooleanSetting from "@/components/BooleanSetting";
+import OilSpeedup from "@/components/OilSpeedup";
 
 export default {
 
   name: "Gasoline",
-  components: {BooleanSetting, GasolineAction, Upgrade},
+  components: {OilSpeedup, BooleanSetting, GasolineAction, Upgrade},
   data() {
     return {
       gasoline: App.game.gasoline,
@@ -43,6 +52,12 @@ export default {
     },
     availableActions() {
       return this.gasoline.actions.filter(action => action.requirements.isCompleted());
+    },
+    oilSpeedups() {
+      return this.gasoline.oilSpeedups;
+    },
+    selectedOilSpeedupIndex() {
+      return this.gasoline.selectedOilSpeedup;
     },
     conversionCost() {
       return this.gasoline.conversionCost();

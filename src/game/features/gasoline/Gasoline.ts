@@ -10,6 +10,7 @@ import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 import {DiscreteUpgrade} from "@/engine/upgrades/DiscreteUpgrade";
 import {UpgradeType} from "@/engine/upgrades/UpgradeType";
 import {CurrencyBuilder} from "@/engine/features/wallet/CurrencyBuilder";
+import {OilSpeedup} from "@/game/features/gasoline/OilSpeedup";
 
 export class Gasoline extends Feature {
     name: string = "Gasoline";
@@ -21,6 +22,9 @@ export class Gasoline extends Feature {
 
     // How often we've converted oil to gasoline already
     conversionCount: number;
+
+    oilSpeedups: OilSpeedup[];
+    selectedOilSpeedup: number;
 
     constructor() {
         super();
@@ -35,7 +39,15 @@ export class Gasoline extends Feature {
             new GasolineAction("Oil Drill", new Currency(1, CurrencyType.Gasoline), "gasoline-first-machine"),
         ]
 
+        this.oilSpeedups = [
+            new OilSpeedup("None", 0, 1),
+            new OilSpeedup("1.5x", 1, 1.5),
+            new OilSpeedup("2x", 10, 2),
+            new OilSpeedup("3x", 100, 3),
+        ]
+
         this.conversionCount = 0;
+        this.selectedOilSpeedup = 0;
     }
 
     conversionCost(): number {
@@ -64,14 +76,33 @@ export class Gasoline extends Feature {
         }
 
         if (App.game.settings.getSetting("auto-convert-oil")?.value) {
-            this.convertOil();
+            // Give the player a small buffer so their oil speedup doesn't run out.
+            const cost = new Currency(this.conversionCost() + this.oilSpeedups[this.selectedOilSpeedup].oilPerSecond, CurrencyType.Oil)
+            if (App.game.wallet.hasCurrency(cost)) {
+                this.convertOil();
+
+            }
         }
 
         // const speedMultiplier = (this.upgrades.getUpgrade("gasoline-automation-speed") as DiscreteUpgrade).getBonus();
         const speedMultiplier = 1;
+
+        // Oil speedups
+        const speedup = this.oilSpeedups[this.selectedOilSpeedup];
+        let oilSpeedupMultiplier;
+
+        const speedupCost = new Currency(speedup.oilPerSecond * delta, CurrencyType.Oil);
+        if (!App.game.wallet.hasCurrency(speedupCost)) {
+            this.selectedOilSpeedup = 0;
+            oilSpeedupMultiplier = 1
+        } else {
+            oilSpeedupMultiplier = speedup.speedMultiplier;
+            App.game.wallet.loseCurrency(speedupCost)
+        }
+
         for (const action of this.actions) {
 
-            action.progress(delta * speedMultiplier);
+            action.progress(delta * speedMultiplier * oilSpeedupMultiplier);
         }
     }
 

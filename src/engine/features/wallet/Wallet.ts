@@ -92,7 +92,7 @@ export class Wallet extends Feature {
     }
 
     public loseCurrency(currency: Currency) {
-        if (isNaN(currency.amount) || currency.amount <= 0) {
+        if (isNaN(currency.amount) || currency.amount < 0) {
             console.trace(`Could not lose currency ${currency.toString()}`);
             return;
         }
