@@ -1,16 +1,13 @@
-import {ProgressBar} from "@/game/progressbars/ProgressBar";
 import {App} from "@/App";
 import {MultiRequirement} from "@/engine/requirements/MultiRequirement";
 import {DiscreteUpgrade} from "@/engine/upgrades/DiscreteUpgrade";
+import {GasolineAction} from "@/game/features/gasoline/GasolineAction";
 import {Currency} from "@/engine/features/wallet/Currency";
 import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 
-export class GasolineAction extends ProgressBar {
-    upgrade: DiscreteUpgrade;
-
+export class ScrapMachineAction extends GasolineAction {
     constructor(goal: number, upgrade: DiscreteUpgrade, requirements: MultiRequirement = new MultiRequirement([])) {
-        super(goal, requirements);
-        this.upgrade = upgrade
+        super(goal, upgrade, requirements);
     }
 
 
@@ -28,7 +25,7 @@ export class GasolineAction extends ProgressBar {
     }
 
     reward(): Currency {
-        return new Currency(this.upgrade.getBonus() * App.game.gasoline.getOilMultiplier(), CurrencyType.Oil);
+        return new Currency(this.upgrade.getBonus() * App.game.gasoline.getScrapMultiplier(), CurrencyType.Scrap);
     }
 
     gainReward(): void {

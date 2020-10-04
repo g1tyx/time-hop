@@ -1,6 +1,10 @@
 <template>
   <button @click="select(index)" class="btn" :class="{'btn-primary': isSelected}">
-    {{ oilSpeedup.label }} <span v-show="oilSpeedup.oilPerSecond > 0">{{ oilSpeedup.oilPerSecond }} oil/s</span>
+    {{ oilSpeedup.label }}
+    <br>
+    <span v-show="oilSpeedup.oilPerSecond > 0">
+      {{ -oilSpeedup.oilPerSecond }} oil/s
+    </span>
   </button>
 </template>
 

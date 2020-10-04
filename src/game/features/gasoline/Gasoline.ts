@@ -11,6 +11,7 @@ import {DiscreteUpgrade} from "@/engine/upgrades/DiscreteUpgrade";
 import {UpgradeType} from "@/engine/upgrades/UpgradeType";
 import {CurrencyBuilder} from "@/engine/features/wallet/CurrencyBuilder";
 import {OilSpeedup} from "@/game/features/gasoline/OilSpeedup";
+import {ScrapMachineAction} from "@/game/features/gasoline/ScrapMachineAction";
 
 export class Gasoline extends Feature {
     name: string = "Gasoline";
@@ -39,20 +40,45 @@ export class Gasoline extends Feature {
 
         this.gasolineUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
             [
-                new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "First machine", 3,
-                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+
             ]
         );
 
         this.actions = [
-            new GasolineAction("Oil Drill", new Currency(1, CurrencyType.Gasoline), "gasoline-first-machine"),
+            new GasolineAction(
+                1,
+                new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "Dig randomly", 3,
+                CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+            ),
+            new GasolineAction(
+                3,
+                new DiscreteUpgrade("gasoline-second-machine", UpgradeType.GasolineMachine, "Purify the Ocean", 3,
+                CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+            ),
+            new GasolineAction(
+                10,
+                new DiscreteUpgrade("gasoline-third-machine", UpgradeType.GasolineMachine, "Oil Drill", 3,
+                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+            ),
+            new GasolineAction(
+                20,
+                new DiscreteUpgrade("gasoline-fourth-machine", UpgradeType.GasolineMachine, "Drilling Platform", 3,
+                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+            ),
+            new ScrapMachineAction(
+                50,
+                new DiscreteUpgrade("gasoline-scrap-machine", UpgradeType.GasolineMachine, "Scrap Machine", 3,
+                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+            )
         ]
 
         this.oilSpeedups = [
             new OilSpeedup("None", 0, 1),
             new OilSpeedup("1.5x", 1, 1.5),
-            new OilSpeedup("2x", 10, 2),
-            new OilSpeedup("3x", 100, 3),
+            new OilSpeedup("2x", 5, 2),
+            new OilSpeedup("3x", 50, 3),
+            new OilSpeedup("4x", 250, 4),
+            new OilSpeedup("5x", 1000, 5),
         ]
 
         this.conversionCount = 0;

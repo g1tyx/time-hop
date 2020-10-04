@@ -74,7 +74,7 @@ export class Wallet extends Feature {
         this.currencies[CurrencyType[CurrencyType.Plutonium]] = 0;
     }
 
-    private addCurrency(currency: Currency) {
+    public addCurrency(currency: Currency) {
         if (isNaN(currency.amount) || currency.amount <= 0) {
             console.trace(`Could not add currency ${currency.toString()}`);
             return;

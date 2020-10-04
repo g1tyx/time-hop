@@ -1,6 +1,14 @@
 <template>
   <div>
-    <p> {{ currency.amount }} {{ currencyType }}</p>
+    <p>
+      <slot name="before">
+      </slot>
+
+      <span v-if="brackets">(</span>{{ currency.amount }} {{ currencyType }}<span v-if="brackets">)</span>
+
+      <slot name="after">
+      </slot>
+    </p>
   </div>
 </template>
 
@@ -12,7 +20,14 @@ export default {
   name: "Currency",
 
   props: {
-    currency: Currency
+    currency: {
+      type: Currency,
+      required: true,
+    },
+    brackets: {
+      type: Boolean,
+      required: false,
+    }
   },
 
   computed: {

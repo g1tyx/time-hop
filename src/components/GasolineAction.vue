@@ -1,20 +1,23 @@
 <template>
   <button @click="buy" class="btn btn-primary" data-progress-style="fill-back" :disabled="!canBuy">
-    <p>{{ action.description }} ({{ this.action.oilReward() }} oil/s)</p>
+    <p>{{ upgrade.displayName }} +{{ reward.amount }} {{ reward.type }}</p>
     <div class="progress">
       <div class="progress-bar" role="progressbar" :aria-valuenow="action.percentage * 100"
            :style="{'width': action.percentage * 100 + '%'}" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
 
 
-
-      <div v-if="upgrade.isMaxLevel()">MAX</div>
-      <div v-else>
-        <div v-if="upgrade.maxLevel !== 1">
-          <currency :currency="upgrade.getCost()"></currency>
-          Level {{ upgrade.getBonus(upgrade.level)}}
-        </div>
+    <div v-if="upgrade.isMaxLevel()">MAX</div>
+    <div v-else>
+      <div v-if="upgrade.maxLevel !== 1">
+        <currency :currency="upgrade.getCost()" :brackets="true">
+          <template v-slot:before>
+            Upgrade
+          </template>
+        </currency>
+        Level {{ upgrade.getBonus(upgrade.level) }}
       </div>
+    </div>
   </button>
 
 
@@ -22,7 +25,6 @@
 
 <script>
 import {GasolineAction} from "@/game/features/gasoline/GasolineAction";
-import {App} from "@/App.ts";
 import Currency from "@/components/Currency";
 
 export default {
@@ -36,10 +38,13 @@ export default {
   },
   computed: {
     upgrade() {
-      return App.game.gasoline.gasolineUpgrades.getUpgrade(this.action.valueUpgrade)
+      return this.action.upgrade;
     },
     cost() {
       return this.upgrade.getCost();
+    },
+    reward() {
+      return this.action.reward();
     },
 
     canBuy() {
