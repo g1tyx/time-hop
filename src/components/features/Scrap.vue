@@ -26,15 +26,11 @@ export default {
       scrap: App.game.scrap,
     }
   },
-  methods: {
-  },
+  methods: {},
 
   computed: {
     canAccess() {
       return this.scrap.canAccess();
-    },
-    scrapGainManual() {
-      return this.scrap.scrapGainManual();
     },
 
     upgrades() {

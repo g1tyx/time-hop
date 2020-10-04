@@ -4,17 +4,24 @@
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
+
+
+    <div class="action-list">
+      <gasoline-action v-for="action in availableActions" :key="action.description" :action="action">
+      </gasoline-action>
+    </div>
   </div>
 </template>
 
 <script>
 import {App} from "@/App.ts";
 import Upgrade from "@/components/Upgrade";
+import GasolineAction from "@/components/GasolineAction";
 
 export default {
 
   name: "Gasoline",
-  components: {Upgrade},
+  components: {GasolineAction, Upgrade},
   data() {
     return {
       gasoline: App.game.gasoline
@@ -29,6 +36,9 @@ export default {
 
     upgrades() {
       return this.gasoline.upgrades.list;
+    },
+    availableActions() {
+      return this.gasoline.actions.filter(action => action.requirements.isCompleted());
     }
   }
 }

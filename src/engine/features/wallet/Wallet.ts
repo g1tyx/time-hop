@@ -18,7 +18,7 @@ export class Wallet extends Feature {
 
     constructor() {
         super();
-        this.currencies[CurrencyType[CurrencyType.Scrap]] = 1;
+        this.currencies[CurrencyType[CurrencyType.Scrap]] = 0;
         this.currencies[CurrencyType[CurrencyType.Gasoline]] = 0;
         this.currencies[CurrencyType[CurrencyType.Lightning]] = 0;
         this.currencies[CurrencyType[CurrencyType.Plutonium]] = 0;
@@ -99,7 +99,7 @@ export class Wallet extends Feature {
     }
 
     parseSaveData(json: Record<string, unknown>): WalletSaveData {
-        return new WalletSaveData(json?.scrap as number ?? 1, json?.gasoline as number ?? 0, json?.lightning as number ?? 0, json?.uranium as number ?? 0)
+        return new WalletSaveData(json?.scrap as number ?? 0, json?.gasoline as number ?? 0, json?.lightning as number ?? 0, json?.uranium as number ?? 0)
     }
 
     save(): WalletSaveData {

@@ -1,12 +1,12 @@
 import {Feature} from "@/game/Feature";
 import {App} from "@/App.ts";
-import {TimeLineState} from "@/game/features/timeline/TimeLineState";
 import {UpgradeList} from "@/engine/upgrades/UpgradeList";
 import {Upgrade} from "@/engine/upgrades/Upgrade";
 import {UpgradeSaveData} from "@/engine/upgrades/UpgradeSaveData";
-import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
-import {Currency} from "@/engine/features/wallet/Currency";
 import {GasolineSaveData} from "@/game/features/gasoline/GasolineSaveData";
+import {GasolineAction} from "@/game/features/gasoline/GasolineAction";
+import {Currency} from "@/engine/features/wallet/Currency";
+import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 
 export class Gasoline extends Feature {
     name: string = "Gasoline";
@@ -15,6 +15,7 @@ export class Gasoline extends Feature {
     upgrades: UpgradeList<Upgrade, UpgradeSaveData>;
 
     nextGasolineGain: number;
+    actions: GasolineAction[]
 
     constructor() {
         super();
@@ -22,6 +23,9 @@ export class Gasoline extends Feature {
             []
         );
 
+        this.actions = [
+            new GasolineAction("Oil Drill", new Currency(1, CurrencyType.Gasoline), "gasoline-first-machine"),
+        ]
 
         this.nextGasolineGain = Date.now();
     }

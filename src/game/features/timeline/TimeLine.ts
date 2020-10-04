@@ -21,11 +21,18 @@ export class TimeLine extends Feature {
 
     public readonly SCRAP_GOAL: number = 10000;
 
+
+    public readonly START_STATE: TimeLineState = TimeLineState.Gasoline;
+
     constructor() {
         super();
-        this.state = TimeLineState.Scrap;
+        this.state = this.START_STATE;
     }
 
+
+    initialize() {
+        this.giveStartingCurrency();
+    }
 
     update(delta: number) {
         if (App.game.wallet.getAmount(CurrencyType.Scrap) > 0) {
@@ -66,29 +73,8 @@ export class TimeLine extends Feature {
         this.canAccessLightning = false;
         this.canAccessPlutonium = false;
 
-        // Award starting cash
-        switch (this.state) {
-            case TimeLineState.Scrap:
-                this.state = TimeLineState.Gasoline
-                App.game.wallet.gainGasoline(1);
-                break;
-            case TimeLineState.Gasoline:
-                this.state = TimeLineState.Lightning
-                App.game.wallet.gainLightning(1);
-                break;
-            case TimeLineState.Lightning:
-                this.state = TimeLineState.Plutonium
-                App.game.wallet.gainPlutonium(1);
-                break;
-            case TimeLineState.Plutonium:
-                this.state = TimeLineState.FluxCapacitor
-                App.game.wallet.gainPlutonium(10);
-                break;
-            case TimeLineState.FluxCapacitor:
-                console.log("You win, good job mate");
-                App.game.wallet.gainPlutonium(1);
-                break;
-        }
+        this.state = Math.min(TimeLineState.FluxCapacitor, this.state + 1);
+        this.giveStartingCurrency();
     }
 
     canTimeTravel() {
@@ -100,11 +86,30 @@ export class TimeLine extends Feature {
     }
 
     parseSaveData(json: Record<string, unknown>): TimeLineSaveData {
-        return new TimeLineSaveData(json.state as TimeLineState ?? TimeLineState.Scrap);
+        return new TimeLineSaveData(json.state as TimeLineState ?? this.START_STATE);
     }
 
     save(): TimeLineSaveData {
         return new TimeLineSaveData(this.state);
     }
 
+    private giveStartingCurrency() {
+        switch (this.state) {
+            case TimeLineState.Scrap:
+                App.game.wallet.gainScrap(1);
+                break;
+            case TimeLineState.Gasoline:
+                App.game.wallet.gainGasoline(1);
+                break;
+            case TimeLineState.Lightning:
+                App.game.wallet.gainLightning(1);
+                break;
+            case TimeLineState.Plutonium:
+                App.game.wallet.gainPlutonium(1);
+                break;
+            case TimeLineState.FluxCapacitor:
+                App.game.wallet.gainPlutonium(10);
+                break;
+        }
+    }
 }
