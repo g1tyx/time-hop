@@ -73,7 +73,7 @@ export class Scrap extends Feature {
 
 
     canAccess(): boolean {
-        return App.game.timeLine.state >= TimeLineState.Scrap && App.game.wallet.hasCurrency(new Currency(CurrencyType.Scrap, 1));
+        return App.game.timeLine.state >= TimeLineState.Scrap && App.game.wallet.hasCurrency(new Currency(1, CurrencyType.Scrap));
     }
 
     parseSaveData(json: Record<string, unknown>): ScrapSaveData {

@@ -1,6 +1,6 @@
 export enum CurrencyType {
-    Scrap,
-    Gasoline,
-    Lightning,
-    Plutonium,
+    Scrap = "Scrap",
+    Gasoline = "Gasoline",
+    Lightning = "Lightning",
+    Plutonium = "Plutonium",
 }
