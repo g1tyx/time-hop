@@ -1,8 +1,8 @@
 <template>
   <div>
-    Game developed by <a target="_blank" href="https://www.github.com/ishadijcks">IshaD</a>
-
-    Progress bar example by <a href="https://codepen.io/frdwulan/pen/bXROMP">Farida Wulandari</a>
+    <h3>Credits</h3>
+    <p>Game developed by <a target="_blank" href="https://www.github.com/ishadijcks">IshaD</a></p>
+    <p>Progress bar example by <a target="_blank" href="https://codepen.io/frdwulan/pen/bXROMP">Farida Wulandari</a></p>
   </div>
 </template>
 
