@@ -1,11 +1,22 @@
 <template>
-  <button class="btn btn-primary" data-progress-style="fill-back" :disabled="action.isStarted">
+  <button @click="buy" class="btn btn-primary" data-progress-style="fill-back" :disabled="!canBuy">
     {{ action.description }}
     (+{{ this.action.oilReward() }})
     <div class="progress">
       <div class="progress-bar" role="progressbar" :aria-valuenow="action.percentage * 100"
            :style="{'width': action.percentage * 100 + '%'}" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+
+
+
+      <div v-if="upgrade.isMaxLevel()">MAX</div>
+      <div v-else>
+        <div v-if="upgrade.maxLevel !== 1">
+          <currency :currency="upgrade.getCost()"></currency>
+          Currently {{ upgrade.getBonus(upgrade.level) | twoDigits }}
+          ({{ upgrade.increasing ? '+' : '-' }}{{ Math.abs(upgrade.getUpgradeBonus()) | twoDigits }})
+        </div>
+      </div>
   </button>
 
 
@@ -13,17 +24,36 @@
 
 <script>
 import {GasolineAction} from "@/game/features/gasoline/GasolineAction";
+import {App} from "@/App.ts";
+import Currency from "@/components/Currency";
 
 export default {
   name: "GasolineAction",
+  components: {Currency},
   props: {
     action: {
       type: GasolineAction,
       required: true
+    },
+  },
+  computed: {
+    upgrade() {
+      return App.game.gasoline.upgrades.getUpgrade(this.action.valueUpgrade)
+    },
+    cost() {
+      return this.upgrade.getCost();
+    },
+
+    canBuy() {
+      return this.upgrade.canBuy();
     }
   },
 
-  methods: {},
+  methods: {
+    buy() {
+      this.upgrade.buy();
+    }
+  },
 
 
 }

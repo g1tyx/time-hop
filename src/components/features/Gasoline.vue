@@ -5,9 +5,6 @@
     <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
       {{ conversionGasolineGain }} Gasoline
     </button>
-    <div class="upgrade-list">
-      <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
-    </div>
 
     <div class="speedup-list">
       <oil-speedup v-for="(speedup, index) in oilSpeedups" :key="speedup.label" :oil-speedup="speedup" :index="index">
@@ -33,7 +30,7 @@ import OilSpeedup from "@/components/OilSpeedup";
 export default {
 
   name: "Gasoline",
-  components: {OilSpeedup, BooleanSetting, GasolineAction, Upgrade},
+  components: {OilSpeedup, BooleanSetting, GasolineAction},
   data() {
     return {
       gasoline: App.game.gasoline,
