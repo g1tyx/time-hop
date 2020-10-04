@@ -6,14 +6,12 @@ import {DiscreteUpgrade} from "@/engine/upgrades/DiscreteUpgrade";
 
 export class ScrapAction extends ProgressBar {
     description: string;
-    baseGain: number;
     automationUpgrade: string;
     valueUpgrade: string;
 
-    constructor(description: string, goal: number, baseGain: number, automationUpgrade: string, valueUpgrade: string, requirements: MultiRequirement = new MultiRequirement([])) {
+    constructor(description: string, goal: number, automationUpgrade: string, valueUpgrade: string, requirements: MultiRequirement = new MultiRequirement([])) {
         super(goal, requirements);
         this.description = description;
-        this.baseGain = baseGain;
         this.automationUpgrade = automationUpgrade;
         this.valueUpgrade = valueUpgrade
     }
@@ -24,7 +22,7 @@ export class ScrapAction extends ProgressBar {
 
     scrapReward(): number {
         const upgrade = (App.game.scrap.upgrades.getUpgrade(this.valueUpgrade) as DiscreteUpgrade);
-        return this.baseGain * upgrade.getBonus();
+        return upgrade.getBonus();
     }
 
     gainReward(): void {

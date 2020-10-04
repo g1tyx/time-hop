@@ -4,6 +4,8 @@ import {TimeLineSaveData} from "@/game/features/timeline/TimeLineSaveData";
 import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 import {Currency} from "@/engine/features/wallet/Currency";
 import {App} from "@/App";
+import {StatisticType} from "@/engine/features/statistics/StatisticType";
+import {NumberStatistic} from "@/engine/features/statistics/NumberStatistic";
 
 
 export class TimeLine extends Feature {
@@ -50,6 +52,12 @@ export class TimeLine extends Feature {
         App.game.lightning.reset();
         App.game.plutonium.reset();
 
+
+        // Reset prestige statistics
+        (App.game.statistics.getStatistic(StatisticType.TotalScrapGainedThisPrestige) as NumberStatistic).value = 0;
+        (App.game.statistics.getStatistic(StatisticType.TotalGasolineGainedThisPrestige) as NumberStatistic).value = 0;
+        (App.game.statistics.getStatistic(StatisticType.TotalLightningGainedThisPrestige) as NumberStatistic).value = 0;
+        (App.game.statistics.getStatistic(StatisticType.TotalPlutoniumGainedThisPrestige) as NumberStatistic).value = 0;
 
         this.canAccessScrap = false;
         this.canAccessGasoline = false;

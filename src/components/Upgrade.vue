@@ -1,10 +1,13 @@
 <template>
-  <button @click="buy" class="btn btn-primary" :class="{'disabled': !canBuy}">
-    <p> {{ upgrade.displayName }} ({{ upgrade.getBonus(upgrade.level) }})</p>
+  <button v-show="show" @click="buy" class="btn btn-primary" :class="{'disabled': !canBuy}">
+    <p> {{ upgrade.displayName }} </p>
     <div v-if="upgrade.isMaxLevel()">MAX</div>
     <div v-else>
       <currency :currency="cost"></currency>
-      {{ upgrade.increasing ? '+' : '-' }}{{ Math.abs(upgrade.getUpgradeBonus()) | twoDigits }}
+      <div v-if="upgrade.maxLevel !== 1">
+        Currently {{ upgrade.getBonus(upgrade.level) | twoDigits }}
+        ({{ upgrade.increasing ? '+' : '-' }}{{ Math.abs(upgrade.getUpgradeBonus()) | twoDigits }})
+      </div>
     </div>
   </button>
 </template>
@@ -12,6 +15,7 @@
 <script>
 import {Upgrade} from "@/engine/upgrades/Upgrade.ts";
 import Currency from "@/components/Currency.vue";
+import {App} from "@/App.ts";
 
 export default {
   name: "Upgrade",
@@ -22,7 +26,7 @@ export default {
     upgrade: {
       type: Upgrade,
       required: true
-    }
+    },
   },
 
   methods: {
@@ -32,6 +36,10 @@ export default {
   },
 
   computed: {
+    show() {
+      const statistic = App.game.statistics.getCurrencyStatisticThisPrestige(this.cost.type);
+      return this.upgrade.level > 0 || statistic.value >= this.cost.amount / 2;
+    },
     cost() {
       return this.upgrade.getCost();
     },
