@@ -31,9 +31,8 @@ export class GasolineAction extends ProgressBar {
     }
 
     oilReward(): number {
-        return 1;
-        // const upgrade = (App.game.gasoline.upgrades.getUpgrade(this.valueUpgrade) as DiscreteUpgrade);
-        // return upgrade.getBonus();
+        const upgrade = (App.game.gasoline.upgrades.getUpgrade(this.valueUpgrade) as DiscreteUpgrade);
+        return upgrade.getBonus();
     }
 
     gainReward(): void {

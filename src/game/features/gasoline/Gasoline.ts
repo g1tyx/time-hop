@@ -17,15 +17,17 @@ export class Gasoline extends Feature {
 
     upgrades: UpgradeList<Upgrade, UpgradeSaveData>;
 
-    nextGasolineGain: number;
     actions: GasolineAction[]
+
+    // How often we've converted oil to gasoline already
+    conversionCount: number;
 
     constructor() {
         super();
         this.upgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
             [
                 new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "First machine", 3,
-                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [1, 2, 3, 4], true)
+                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
             ]
         );
 
@@ -33,12 +35,36 @@ export class Gasoline extends Feature {
             new GasolineAction("Oil Drill", new Currency(1, CurrencyType.Gasoline), "gasoline-first-machine"),
         ]
 
-        this.nextGasolineGain = Date.now();
+        this.conversionCount = 0;
+    }
+
+    conversionCost(): number {
+        return this.conversionCount + 1
+    }
+
+    conversionGasolineGain(): number {
+        return 1
+    }
+
+    convertOil() {
+        const cost = new Currency(this.conversionCost(), CurrencyType.Oil)
+        if (!App.game.wallet.hasCurrency(cost)) {
+            return;
+        }
+        console.log("converting")
+
+        this.conversionCount++;
+        App.game.wallet.loseCurrency(cost);
+        App.game.wallet.gainGasoline(this.conversionGasolineGain());
     }
 
     update(delta: number) {
         if (!this.canAccess()) {
             return;
+        }
+
+        if (App.game.settings.getSetting("auto-convert-oil")?.value) {
+            this.convertOil();
         }
 
         // const speedMultiplier = (this.upgrades.getUpgrade("gasoline-automation-speed") as DiscreteUpgrade).getBonus();

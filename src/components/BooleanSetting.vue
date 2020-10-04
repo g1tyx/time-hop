@@ -2,7 +2,6 @@
   <div>
     <span> {{ setting.displayName }} </span>
     <input type="checkbox" :checked="setting.value" v-on:change="change">
-    <span> {{ setting.value }} </span>
   </div>
 
 
@@ -10,7 +9,7 @@
 
 <script>
 import {BooleanSetting} from "@/engine/features/settings/BooleanSetting";
-import {App} from "src/App.ts";
+import {App} from "@/App.ts";
 
 export default {
   name: "BooleanSetting",

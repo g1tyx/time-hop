@@ -1,6 +1,8 @@
 <template>
   <div v-show="canAccess">
     Gasoline:
+    <boolean-setting :setting="autoConvertOilSetting"></boolean-setting>
+    <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to {{conversionGasolineGain}} Gasoline</button>
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
@@ -17,14 +19,16 @@
 import {App} from "@/App.ts";
 import Upgrade from "@/components/Upgrade";
 import GasolineAction from "@/components/GasolineAction";
+import BooleanSetting from "@/components/BooleanSetting";
 
 export default {
 
   name: "Gasoline",
-  components: {GasolineAction, Upgrade},
+  components: {BooleanSetting, GasolineAction, Upgrade},
   data() {
     return {
-      gasoline: App.game.gasoline
+      gasoline: App.game.gasoline,
+      autoConvertOilSetting: App.game.settings.getSetting("auto-convert-oil"),
     }
   },
   methods: {},
@@ -39,6 +43,12 @@ export default {
     },
     availableActions() {
       return this.gasoline.actions.filter(action => action.requirements.isCompleted());
+    },
+    conversionCost() {
+      return this.gasoline.conversionCost();
+    },
+    conversionGasolineGain() {
+      return this.gasoline.conversionGasolineGain();
     }
   }
 }
