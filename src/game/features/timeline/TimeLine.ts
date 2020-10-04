@@ -20,6 +20,7 @@ export class TimeLine extends Feature {
     canAccessPlutonium: boolean = false;
 
     public readonly SCRAP_GOAL: number = 10000;
+    public readonly GASOLINE_GOAL: number = 10000;
 
 
     public readonly START_STATE: TimeLineState = TimeLineState.Gasoline;

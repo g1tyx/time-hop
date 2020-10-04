@@ -16,7 +16,8 @@ export class Gasoline extends Feature {
     name: string = "Gasoline";
     saveKey: string = "gasoline";
 
-    upgrades: UpgradeList<Upgrade, UpgradeSaveData>;
+    gasolineUpgrades: UpgradeList<Upgrade, UpgradeSaveData>;
+    oilUpgrades: UpgradeList<Upgrade, UpgradeSaveData>;
 
     actions: GasolineAction[]
 
@@ -28,7 +29,15 @@ export class Gasoline extends Feature {
 
     constructor() {
         super();
-        this.upgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
+        this.oilUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
+            [
+                new DiscreteUpgrade("oil-global-value", UpgradeType.OilValue, "Increase oil value", 3,
+                    CurrencyBuilder.createArray([25, 50, 100], CurrencyType.Oil), [1, 2, 3, 4], true)
+            ]
+        )
+
+
+        this.gasolineUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
             [
                 new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "First machine", 3,
                     CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
@@ -50,6 +59,11 @@ export class Gasoline extends Feature {
         this.selectedOilSpeedup = 0;
     }
 
+
+    getOilMultiplier(): number {
+        return this.oilUpgrades.getTotalMultiplierForType(UpgradeType.OilValue);
+    }
+
     conversionCost(): number {
         return this.conversionCount + 1
     }
@@ -63,7 +77,6 @@ export class Gasoline extends Feature {
         if (!App.game.wallet.hasCurrency(cost)) {
             return;
         }
-        console.log("converting")
 
         this.conversionCount++;
         App.game.wallet.loseCurrency(cost);
@@ -84,7 +97,7 @@ export class Gasoline extends Feature {
             }
         }
 
-        // const speedMultiplier = (this.upgrades.getUpgrade("gasoline-automation-speed") as DiscreteUpgrade).getBonus();
+        // const speedMultiplier = (this.gasolineUpgrades.getUpgrade("gasoline-automation-speed") as DiscreteUpgrade).getBonus();
         const speedMultiplier = 1;
 
         // Oil speedups

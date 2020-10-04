@@ -30,6 +30,10 @@ export abstract class Feature implements Saveable {
         return 1;
     }
 
+    getOilMultiplier(): number {
+        return 1;
+    }
+
     getGasolineMultiplier(): number {
         return 1;
     }

@@ -37,7 +37,7 @@ export class Wallet extends Feature {
     public gainOil(base: number): number {
         const oil = base;
 
-        this._onScrapGain.dispatch(oil);
+        this._onOilGain.dispatch(oil);
         this.addCurrency(new Currency(oil, CurrencyType.Oil));
         return oil;
     }

@@ -63,7 +63,7 @@ export class Statistics extends Feature {
             case CurrencyType.Scrap:
                 return this.getStatistic(StatisticType.TotalScrapGainedThisPrestige) as NumberStatistic;
             case CurrencyType.Oil:
-                return this.getStatistic(StatisticType.TotalOilGained) as NumberStatistic;
+                return this.getStatistic(StatisticType.TotalOilGainedThisPrestige) as NumberStatistic;
             case CurrencyType.Gasoline:
                 return this.getStatistic(StatisticType.TotalGasolineGainedThisPrestige) as NumberStatistic;
             case CurrencyType.Lightning:

@@ -6,6 +6,12 @@
       {{ conversionGasolineGain }} Gasoline
     </button>
 
+    <div class="oil-upgrades-list">
+      <upgrade v-for="upgrade in oilUpgrades" :key="upgrade.identifier" :upgrade="upgrade">
+      </upgrade>
+    </div>
+
+
     <div class="speedup-list">
       <oil-speedup v-for="(speedup, index) in oilSpeedups" :key="speedup.label" :oil-speedup="speedup" :index="index">
       </oil-speedup>
@@ -30,7 +36,7 @@ import OilSpeedup from "@/components/OilSpeedup";
 export default {
 
   name: "Gasoline",
-  components: {OilSpeedup, BooleanSetting, GasolineAction},
+  components: {Upgrade, OilSpeedup, BooleanSetting, GasolineAction},
   data() {
     return {
       gasoline: App.game.gasoline,
@@ -44,8 +50,8 @@ export default {
       return this.gasoline.canAccess();
     },
 
-    upgrades() {
-      return this.gasoline.upgrades.list;
+    oilUpgrades() {
+      return this.gasoline.oilUpgrades.list;
     },
     availableActions() {
       return this.gasoline.actions.filter(action => action.requirements.isCompleted());
