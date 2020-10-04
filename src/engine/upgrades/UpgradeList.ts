@@ -27,7 +27,7 @@ export class UpgradeList<GenericUpgrade extends Upgrade, GenericUpgradeSaveData 
 
     getTotalMultiplierForType(type: UpgradeType): number {
         let multiplier = 1;
-        for (const upgrade of this.list) {
+        for (const upgrade of this.list.filter(upgrade => upgrade.type === type)) {
             multiplier *= upgrade.getBonus(upgrade.level);
         }
         return multiplier;
