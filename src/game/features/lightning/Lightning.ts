@@ -42,7 +42,7 @@ export class Lightning extends Feature {
 
 
     canAccess(): boolean {
-        return App.game.timeLine.state >= TimeLineState.Lightning && App.game.wallet.hasCurrency(new Currency(1, CurrencyType.Lightning));
+        return App.game.timeLine.canAccessLightning;
     }
 
     parseSaveData(json: Record<string, unknown>): LightningSaveData {

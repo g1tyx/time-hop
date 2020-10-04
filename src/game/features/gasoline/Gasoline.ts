@@ -42,7 +42,7 @@ export class Gasoline extends Feature {
 
 
     canAccess(): boolean {
-        return App.game.timeLine.state >= TimeLineState.Gasoline && App.game.wallet.hasCurrency(new Currency(1, CurrencyType.Gasoline));
+        return App.game.timeLine.canAccessGasoline;
     }
 
     parseSaveData(json: Record<string, unknown>): GasolineSaveData {

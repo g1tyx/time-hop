@@ -31,11 +31,11 @@ export class Scrap extends Feature {
                 new SingleLevelUpgrade("scrap-unlock-dig-automation", UpgradeType.ScrapAutomation, "Automatically dig for scraps", new Currency(100, CurrencyType.Scrap), 1),
                 new SingleLevelUpgrade("scrap-unlock-recycle-automation", UpgradeType.ScrapAutomation, "Automatically recycle stuff", new Currency(100, CurrencyType.Scrap), 1),
                 new DiscreteUpgrade("scrap-dig-value", UpgradeType.ScrapValue, "Dig value", 10,
-                    CurrencyBuilder.createArray([10, 25, 50, 100, 250, 500, 750, 1000, 2500, 5000], CurrencyType.Scrap),
-                    [1, 1.25, 1.5, 1.75, 2, 2.33, 2.66, 3, 3.5, 4, 5], true),
+                    CurrencyBuilder.createArray([5, 10, 25, 50, 100, 250, 500, 750, 1000, 2500], CurrencyType.Scrap),
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], true),
                 new DiscreteUpgrade("scrap-recycle-value", UpgradeType.ScrapValue, "Recycle value", 10,
-                    CurrencyBuilder.createArray([100, 250, 500, 1000, 2500, 5000, 7500, 10000, 25000, 50000], CurrencyType.Scrap),
-                    [1, 1.25, 1.5, 1.75, 2, 2.33, 2.66, 3, 3.5, 4, 5], true),
+                    CurrencyBuilder.createArray([25, 50, 100, 250, 500, 750, 1000, 2500, 5000, 10000], CurrencyType.Scrap),
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], true),
             ]
         );
 
@@ -62,7 +62,7 @@ export class Scrap extends Feature {
 
 
     canAccess(): boolean {
-        return App.game.timeLine.state >= TimeLineState.Scrap && App.game.wallet.hasCurrency(new Currency(1, CurrencyType.Scrap));
+        return App.game.timeLine.canAccessScrap;
     }
 
     parseSaveData(json: Record<string, unknown>): ScrapSaveData {

@@ -30,7 +30,7 @@ export class Game {
 
     public state: GameState;
 
-    private readonly TICK_DURATION_MS = 100.0;
+    private readonly TICK_DURATION_MS = 50.0;
 
     constructor(timeLine: TimeLine, scrap: Scrap, gasoline: Gasoline, lightning: Lightning, plutonium: Plutonium, wallet: Wallet, settings: Settings, statistics: Statistics, achievements: Achievements) {
         this.allFeatures = [];

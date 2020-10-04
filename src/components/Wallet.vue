@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p v-show="scrap > 0 || gasoline > 0 || lightning > 0 || plutonium > 0">Scrap: {{ scrap }}</p>
-    <p v-show="gasoline > 0 || lightning > 0 || plutonium > 0">Gasoline: {{ gasoline }}</p>
-    <p v-show="lightning > 0 || plutonium > 0">Lightning: {{ lightning }}</p>
-    <p v-show="plutonium > 0">Plutonium: {{ plutonium }}</p>
+    <p v-show="timeLine.canAccessScrap">Scrap: {{ scrap }}</p>
+    <p v-show="timeLine.canAccessGasoline">Gasoline: {{ gasoline }}</p>
+    <p v-show="timeLine.canAccessLightning">Lightning: {{ lightning }}</p>
+    <p v-show="timeLine.canAccessPlutonium">Plutonium: {{ plutonium }}</p>
   </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
   data: function () {
     return {
       wallet: App.game.wallet,
+      timeLine: App.game.timeLine,
     }
   },
 

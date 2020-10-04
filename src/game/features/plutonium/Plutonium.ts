@@ -42,7 +42,7 @@ export class Plutonium extends Feature {
 
 
     canAccess(): boolean {
-        return App.game.timeLine.state >= TimeLineState.Plutonium && App.game.wallet.hasCurrency(new Currency(1, CurrencyType.Plutonium));
+        return App.game.timeLine.canAccessPlutonium;
     }
 
     parseSaveData(json: Record<string, unknown>): PlutoniumSaveData {
