@@ -84,4 +84,9 @@ export class Scrap extends Feature {
         return new ScrapSaveData();
     }
 
+    reset() {
+        for (const upgrade of this.upgrades.list) {
+            upgrade.level = 0;
+        }
+    }
 }

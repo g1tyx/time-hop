@@ -53,5 +53,8 @@ export class Lightning extends Feature {
         return new LightningSaveData();
     }
 
+    reset() {
+        // Empty
+    }
 }
 

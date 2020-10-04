@@ -56,6 +56,12 @@ export class Wallet extends Feature {
         return plutonium;
     }
 
+    public loseAll() {
+        this.currencies[CurrencyType[CurrencyType.Scrap]] = 0;
+        this.currencies[CurrencyType[CurrencyType.Gasoline]] = 0;
+        this.currencies[CurrencyType[CurrencyType.Lightning]] = 0;
+        this.currencies[CurrencyType[CurrencyType.Plutonium]] = 0;
+    }
 
     private addCurrency(currency: Currency) {
         if (isNaN(currency.amount) || currency.amount <= 0) {

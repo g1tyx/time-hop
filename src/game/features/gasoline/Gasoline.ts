@@ -53,5 +53,8 @@ export class Gasoline extends Feature {
         return new GasolineSaveData();
     }
 
+    reset() {
+        // Empty
+    }
 }
 

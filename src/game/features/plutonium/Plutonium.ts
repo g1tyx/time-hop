@@ -53,5 +53,8 @@ export class Plutonium extends Feature {
         return new PlutoniumSaveData();
     }
 
+    reset() {
+        // Empty
+    }
 }
 
