@@ -15,6 +15,5 @@ git commit -m 'deploy'
 
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:Ishadijcks/ludum-dare-47-timehop.git master:gh-pages
-
+git push -f git@github.com:ishadijcks/ludum-dare-47-timehop.git master:gh-pages
 cd -
