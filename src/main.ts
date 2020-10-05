@@ -20,11 +20,11 @@ window.onload = function () {
     App.start();
 
     // Expose the App class to the window (and the console)
-    if (process.env.DEBUG && typeof window !== undefined) {
+    // if (process.env.DEBUG && typeof window !== undefined) {
 
         console.log('Exposing App to console');
         window.App = App;
-    }
+    // }
     Vue.use(vmodal)
 
 
