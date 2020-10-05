@@ -1,7 +1,7 @@
 <template>
   <div v-if="canAccess">
 
-    <h3>{{ oilAmount }} Oil, {{gasolineAmount}} Gasoline</h3>
+    <h3>{{ oilAmount }} Oil, {{ gasolineAmount }} Gasoline</h3>
 
     <h3>Machines</h3>
     <div class="action-list">
@@ -9,13 +9,14 @@
       </gasoline-action>
     </div>
 
-    <h3>Convert</h3>
-    <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
-      {{ conversionGasolineGain }} Gasoline
-      <boolean-setting :setting="autoConvertOilSetting" :show-description="true"></boolean-setting>
+    <div v-if="canConvert">
+      <h3>Convert</h3>
+      <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
+        {{ conversionGasolineGain }} Gasoline
+        <boolean-setting :setting="autoConvertOilSetting" :show-description="true"></boolean-setting>
 
-    </button>
-
+      </button>
+    </div>
     <h3>Upgrades</h3>
     <div class="oil-upgrades-list">
       <upgrade v-for="upgrade in oilUpgrades" :key="upgrade.identifier" :upgrade="upgrade">
@@ -27,7 +28,8 @@
     <div v-if="oilSpeedupCount > 1">
       <h3>Grease those machines!</h3>
       <div class="speedup-list">
-        <oil-speedup v-for="(_, index) in oilSpeedupCount" :key="oilSpeedups[index].label" :oil-speedup="oilSpeedups[index]" :index="index">
+        <oil-speedup v-for="(_, index) in oilSpeedupCount" :key="oilSpeedups[index].label"
+                     :oil-speedup="oilSpeedups[index]" :index="index">
         </oil-speedup>
       </div>
     </div>
@@ -81,6 +83,9 @@ export default {
     },
     conversionCost() {
       return this.gasoline.conversionCost();
+    },
+    canConvert() {
+      return this.gasoline.oilUpgrades.getUpgrade("gasoline-conversion-value").level > 0;
     },
     conversionGasolineGain() {
       return this.gasoline.conversionGasolineGain();

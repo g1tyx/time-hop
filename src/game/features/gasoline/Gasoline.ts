@@ -12,7 +12,9 @@ import {UpgradeType} from "@/engine/upgrades/UpgradeType";
 import {CurrencyBuilder} from "@/engine/features/wallet/CurrencyBuilder";
 import {OilSpeedup} from "@/game/features/gasoline/OilSpeedup";
 import {ScrapMachineAction} from "@/game/features/gasoline/ScrapMachineAction";
-import {SingleLevelUpgrade} from "@/engine/upgrades/SingleLevelUpgrade";
+import {MultiRequirement} from "@/engine/requirements/MultiRequirement";
+import {StatisticRequirement} from "@/engine/requirements/StatisticRequirement";
+import {StatisticType} from "@/engine/features/statistics/StatisticType";
 
 export class Gasoline extends Feature {
     name: string = "Gasoline";
@@ -45,8 +47,8 @@ export class Gasoline extends Feature {
                     CurrencyBuilder.createArray([20, 50, 100, 250, 500, 1000, 2000, 4000, 10000, 25000, 50000, 100000, 250000], CurrencyType.Oil), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12.5, 15, 17.5, 20], true),
                 new DiscreteUpgrade("gasoline-machine-speed", UpgradeType.GasolineMachineSpeed, "Increase action speed", 15,
                     CurrencyBuilder.createArray([30, 100, 500, 1000, 5000, 10000, 15000, 25000, 50000, 100000, 250000, 500000, 1000000, 2500000, 5000000], CurrencyType.Oil), [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14], true),
-                new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Improve conversion gain", 17,
-                    CurrencyBuilder.createArray([40, 80, 150, 300, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000, 150000], CurrencyType.Oil), [1.0, 1.1, 1.2, 1.5, 1.7, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 5, 6, 7, 8, 9, 10], true),
+                new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Oil to Gasoline", 17,
+                    CurrencyBuilder.createArray([100, 175, 250, 300, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000, 150000], CurrencyType.Oil), [0, 1, 1.2, 1.5, 1.7, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 5, 6, 7, 8, 9, 10], true),
                 new DiscreteUpgrade("gasoline-unlock-oil-speedup", UpgradeType.UnlockOilSpeedup, "Unlock Greasing", 8,
                     // Grease prices are 5x the oil/s
                     CurrencyBuilder.createArray([5, 25, 250, 1250, 5000, 50000, 500000, 1000000], CurrencyType.Oil), [0, 1, 2, 3, 4, 5, 6, 7, 8], true),
@@ -64,27 +66,32 @@ export class Gasoline extends Feature {
                 3,
                 new DiscreteUpgrade("gasoline-second-machine", UpgradeType.GasolineMachine, "Purify the Ocean", 3,
                     CurrencyBuilder.createArray([5, 10, 15], CurrencyType.Gasoline), [0, 3, 6, 9], true)
+                , new MultiRequirement([new StatisticRequirement(StatisticType.TotalGasolineGainedThisPrestige, 3)]),
             ),
             new GasolineAction(
                 5,
                 new DiscreteUpgrade("gasoline-third-machine", UpgradeType.GasolineMachine, "Oil Drill", 12,
                     CurrencyBuilder.createArray([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], CurrencyType.Gasoline), [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144], true)
+                , new MultiRequirement([new StatisticRequirement(StatisticType.TotalGasolineGainedThisPrestige, 10)]),
             ),
             new GasolineAction(
                 10,
                 new DiscreteUpgrade("gasoline-fourth-machine", UpgradeType.GasolineMachine, "Purify the Ocean", 3,
                     CurrencyBuilder.createArray([30, 60, 90], CurrencyType.Gasoline), [0, 10, 20, 40], true)
+                , new MultiRequirement([new StatisticRequirement(StatisticType.TotalGasolineGainedThisPrestige, 30)]),
             ),
 
             new GasolineAction(
                 20,
                 new DiscreteUpgrade("gasoline-fifth-machine", UpgradeType.GasolineMachine, "Drilling Platform", 3,
                     CurrencyBuilder.createArray([250, 500, 1000], CurrencyType.Gasoline), [0, 200, 500, 1000], true)
+                , new MultiRequirement([new StatisticRequirement(StatisticType.TotalGasolineGainedThisPrestige, 250)]),
             ),
             new ScrapMachineAction(
                 250,
                 new DiscreteUpgrade("gasoline-scrap-machine", UpgradeType.GasolineMachine, "Scrap Machine", 5,
                     CurrencyBuilder.createArray([App.game.timeLine.GASOLINE_GOAL, App.game.timeLine.GASOLINE_GOAL * 1.5, App.game.timeLine.GASOLINE_GOAL * 2, App.game.timeLine.GASOLINE_GOAL * 3, App.game.timeLine.GASOLINE_GOAL * 4, App.game.timeLine.GASOLINE_GOAL * 5], CurrencyType.Gasoline), [0, 3, 15, 30, 150, 300], true)
+                , new MultiRequirement([new StatisticRequirement(StatisticType.TotalGasolineGainedThisPrestige, 1000)]),
             )
         ]
 
