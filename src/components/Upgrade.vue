@@ -1,5 +1,5 @@
 <template>
-  <button v-show="show" @click="buy" class="btn btn-primary upgrade" :class="{'disabled': !canBuy}">
+  <button v-show="show" @click="buy" class="btn btn-info upgrade" :class="{'disabled': !canBuy}">
     <p> {{ upgrade.displayName }} </p>
     <div v-if="upgrade.isMaxLevel()">MAX</div>
     <div v-else>
