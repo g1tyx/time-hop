@@ -1,8 +1,10 @@
 <template>
   <div>
-    <button @click="timeTravel" :disabled="!canTimeTravel">
-      Time travel
+    <div style="display: flex; justify-content: center;">
+    <button class="btn btn-primary" @click="timeTravel" :disabled="!canTimeTravel" style="padding:20px;">
+      Reach {{timeLine.SCRAP_GOAL}} Scrap to Time travel
     </button>
+    </div>
     <br>
     <br>
     <br>

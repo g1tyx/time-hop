@@ -1,6 +1,6 @@
 <template>
   <div v-show="canAccess">
-    Lightning:
+    Lightning isn't finished yet, so congrats for now
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
