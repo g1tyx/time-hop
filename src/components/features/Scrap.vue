@@ -1,13 +1,14 @@
 <template>
   <div class="container" v-if="canAccess">
     <h3>{{ scrapAmount | twoDigits }} Scrap</h3>
-    <div class="upgrade-list">
-      <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
-    </div>
     <div class="action-list">
       <scrap-action v-for="action in availableActions" :key="action.description" :action="action">
       </scrap-action>
     </div>
+    <div class="upgrade-list">
+      <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
+    </div>
+
   </div>
 </template>
 

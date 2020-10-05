@@ -3,21 +3,18 @@
 
     <h3>{{ oilAmount | twoDigits }} Oil, {{ gasolineAmount | twoDigits }} Gasoline</h3>
 
-    <h3>Machines</h3>
     <div class="action-list">
       <gasoline-action v-for="action in availableActions" :key="action.description" :action="action">
       </gasoline-action>
     </div>
 
     <div v-if="canConvert">
-      <h3>Convert</h3>
       <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
-        {{ conversionGasolineGain }} Gasoline
+        {{ conversionGasolineGain }} Gasoline<br>
         <boolean-setting :setting="autoConvertOilSetting" :show-description="true"></boolean-setting>
 
       </button>
     </div>
-    <h3>Upgrades</h3>
     <div class="oil-upgrades-list">
       <upgrade v-for="upgrade in oilUpgrades" :key="upgrade.identifier" :upgrade="upgrade">
       </upgrade>
@@ -25,7 +22,6 @@
 
 
     <div v-if="oilSpeedupCount > 1">
-      <h3>Grease those machines!</h3>
       <div class="speedup-list">
         <oil-speedup v-for="(_, index) in oilSpeedupCount" :key="oilSpeedups[index].label"
                      :oil-speedup="oilSpeedups[index]" :index="index">

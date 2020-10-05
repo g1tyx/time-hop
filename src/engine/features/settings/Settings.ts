@@ -11,9 +11,9 @@ export class Settings extends Feature {
     list: Setting[] = [];
 
     initialize(): void {
-        this.add(new BooleanSetting('auto-convert-oil', 'Auto', false));
-        this.add(new BooleanSetting('auto-convert-bolts', 'Auto', false));
-        this.add(new BooleanSetting('auto-strike-bolts', 'Auto strike bolts', false));
+        this.add(new BooleanSetting('auto-convert-oil', 'Automate', false));
+        this.add(new BooleanSetting('auto-convert-bolts', 'Automate', false));
+        this.add(new BooleanSetting('auto-strike-bolts', 'Automate strike bolts', false));
     }
 
     public add(setting: Setting): void {

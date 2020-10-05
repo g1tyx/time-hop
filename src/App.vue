@@ -2,17 +2,18 @@
   <div class="container">
     <time-line></time-line>
     <div class="column">
-    <div class="row">
-      <lightning></lightning>
-
-    </div>
+      <div class="row">
+        <lightning></lightning>
+      </div>
+      <div class="row">
+        <gasoline></gasoline>
+      </div>
       <div class="row">
         <scrap></scrap>
-
-        <gasoline></gasoline>
-
       </div>
-      <credits></credits>
+      <div class="row">
+        <credits></credits>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +40,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 .row {
   display: flex;
   flex-direction: row;
