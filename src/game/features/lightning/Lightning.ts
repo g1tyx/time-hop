@@ -33,7 +33,7 @@ export class Lightning extends Feature {
     }
 
     strike(x: number, y: number) {
-        if(this.bolts > 0) {
+        if (this.bolts > 0) {
             this.bolts--;
             this.grid.strike(x, y);
         }
@@ -66,7 +66,7 @@ export class Lightning extends Feature {
 
         if (App.game.settings.getSetting("auto-convert-bolts")?.value) {
             for (let i = 0; i < 100; i++) {
-                const cost = new Currency(this.conversionCost() , CurrencyType.Lightning)
+                const cost = new Currency(this.conversionCost(), CurrencyType.Lightning)
                 if (App.game.wallet.hasCurrency(cost)) {
                     this.convertLightning();
                 } else {
