@@ -2,6 +2,7 @@
   <div v-show="canAccess">
     <h3>{{ lightningAmount | twoDigits }} Lightning, {{ boltAmount | twoDigits }} Bolts</h3>
 
+    <p>Your {{ lightning.rods }} rods are generating {{ lightning.rods }} Lightning/s</p>
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
@@ -13,11 +14,21 @@
 
     </button>
 
+
+    Auto strike bolts every {{ lightning.autoStrikeTime() / 1000  | twoDigits }} seconds
+    <boolean-setting :setting="autoStrikeSetting" :show-description="false"></boolean-setting>
+
+    <button v-if="oilAmount > 0" @click="oilConvert" class="btn btn-primary" :disabled="oilAmount < oilGoal">
+      Convert 100 oil to 1 gasoline<br>
+      You have {{ oilAmount }} oil.
+    </button>
+
     <div class="grid">
       <div class="row" v-for="(row, y) in grid" :key="'row-' + y">
         <div
             :class="{'tile-ready': tile.isReady}"
             @click="strike(x, y)" class="tile" v-for="(tile, x) in row" :key="'tile-'+x+'-'+y">
+          <span v-if="!tile.isReady">{{ tile.reward }}</span>
         </div>
       </div>
 
@@ -40,12 +51,15 @@ export default {
       lightning: App.game.lightning,
       wallet: App.game.wallet,
       autoConvertBoltsSetting: App.game.settings.getSetting("auto-convert-bolts"),
-
+      autoStrikeSetting: App.game.settings.getSetting("auto-strike-bolts"),
     }
   },
   methods: {
     strike(x, y) {
       this.lightning.strike(x, y);
+    },
+    oilConvert() {
+      this.lightning.oilConvert();
     }
   },
 
@@ -62,6 +76,12 @@ export default {
     },
     lightningAmount() {
       return this.wallet.currencies[CurrencyType[CurrencyType.Lightning]];
+    },
+    oilAmount() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Oil]];
+    },
+    oilGoal() {
+      return App.game.timeLine.OIL_GOAL;
     },
     boltAmount() {
       return this.lightning.bolts;

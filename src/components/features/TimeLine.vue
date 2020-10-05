@@ -1,9 +1,9 @@
 <template>
   <div>
     <div style="display: flex; justify-content: center;">
-    <button class="btn btn-primary" @click="timeTravel" :disabled="!canTimeTravel" style="padding:20px;">
-      Reach {{timeLine.SCRAP_GOAL}} Scrap to Time travel
-    </button>
+      <button class="btn btn-primary" @click="timeTravel" :disabled="!canTimeTravel" style="padding:20px;">
+        Reach {{ timeLine.SCRAP_GOAL }} Scrap to Time travel
+      </button>
     </div>
     <br>
     <br>
@@ -104,7 +104,7 @@ export default {
       } else if (this.timeLine.canAccessGasoline) {
         return Math.min(0.8, 0.6 + 0.2 * this.logProgress(App.game.wallet.getAmount(CurrencyType.Gasoline), this.timeLine.GASOLINE_GOAL));
       } else if (this.timeLine.canAccessLightning) {
-        return 0.4;
+        return Math.min(0.6, 0.4 + 0.2 * this.logProgress(App.game.wallet.getAmount(CurrencyType.Oil), this.timeLine.OIL_GOAL));
       } else if (this.timeLine.canAccessPlutonium) {
         return 0.2;
       }

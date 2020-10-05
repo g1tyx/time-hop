@@ -21,6 +21,7 @@ export class TimeLine extends Feature {
 
     public readonly SCRAP_GOAL: number = 10000;
     public readonly GASOLINE_GOAL: number = 10000;
+    public readonly OIL_GOAL: number = 100;
 
 
     public readonly START_STATE: TimeLineState = TimeLineState.Lightning;

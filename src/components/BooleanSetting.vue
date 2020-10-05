@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <span>
     <span v-if="showDescription"> {{ setting.displayName }} </span>
     <input type="checkbox" :checked="setting.value" v-on:change="change">
-  </div>
+  </span>
 
 
 </template>
