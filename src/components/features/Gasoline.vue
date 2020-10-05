@@ -22,10 +22,10 @@
     </div>
 
 
-    <div v-if="hasOilSpeedups">
+    <div v-if="oilSpeedupCount > 1">
       <h3>Grease those machines!</h3>
       <div class="speedup-list">
-        <oil-speedup v-for="(speedup, index) in oilSpeedups" :key="speedup.label" :oil-speedup="speedup" :index="index">
+        <oil-speedup v-for="(_, index) in oilSpeedupCount" :key="oilSpeedups[index].label" :oil-speedup="oilSpeedups[index]" :index="index">
         </oil-speedup>
       </div>
     </div>
@@ -65,8 +65,8 @@ export default {
     availableActions() {
       return this.gasoline.actions.filter(action => action.requirements.isCompleted());
     },
-    hasOilSpeedups() {
-      return this.gasoline.oilUpgrades.getUpgrade("gasoline-unlock-oil-speedup").isBought();
+    oilSpeedupCount() {
+      return 1 + this.gasoline.oilUpgrades.getUpgrade("gasoline-unlock-oil-speedup").level;
     },
     oilSpeedups() {
       return this.gasoline.oilSpeedups;

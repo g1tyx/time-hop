@@ -15,7 +15,7 @@
             Upgrade
           </template>
         </currency>
-        Level {{ upgrade.getBonus(upgrade.level) }}
+        Level {{ upgrade.level}}
       </div>
     </div>
   </button>

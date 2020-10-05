@@ -41,13 +41,15 @@ export class Gasoline extends Feature {
     initialize() {
         this.oilUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
             [
-                new DiscreteUpgrade("oil-global-value", UpgradeType.OilValue, "Increase oil value", 3,
-                    CurrencyBuilder.createArray([20, 50, 100], CurrencyType.Oil), [1, 2, 3, 4], true),
-                new DiscreteUpgrade("gasoline-machine-speed", UpgradeType.GasolineMachineSpeed, "Increase action speed", 5,
-                    CurrencyBuilder.createArray([30, 100, 500, 1000, 5000], CurrencyType.Oil), [1, 1.5, 2, 3, 4, 5], true),
-                new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Improve conversion gain", 5,
-                    CurrencyBuilder.createArray([40, 80, 150, 300, 450], CurrencyType.Oil), [1.0, 1.1, 1.2, 1.5, 1.7, 2], true),
-                new SingleLevelUpgrade("gasoline-unlock-oil-speedup", UpgradeType.UnlockOilSpeedup, "Unlock Greasing", new Currency(100, CurrencyType.Oil), 1),
+                new DiscreteUpgrade("oil-global-value", UpgradeType.OilValue, "Increase oil value", 13,
+                    CurrencyBuilder.createArray([20, 50, 100, 250, 500, 1000, 2000, 4000, 6000, 10000, 25000, 50000, 100000], CurrencyType.Oil), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12.5, 15, 17.5, 20], true),
+                new DiscreteUpgrade("gasoline-machine-speed", UpgradeType.GasolineMachineSpeed, "Increase action speed", 13,
+                    CurrencyBuilder.createArray([30, 100, 500, 1000, 5000, 10000, 15000, 25000, 50000, 100000, 250000, 500000, 1000000], CurrencyType.Oil), [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 19], true),
+                new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Improve conversion gain", 12,
+                    CurrencyBuilder.createArray([40, 80, 150, 300, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000], CurrencyType.Oil), [1.0, 1.1, 1.2, 1.5, 1.7, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 5], true),
+                new DiscreteUpgrade("gasoline-unlock-oil-speedup", UpgradeType.UnlockOilSpeedup, "Unlock Greasing", 8,
+                    // Grease prices are 5x the oil/s
+                    CurrencyBuilder.createArray([5, 25, 250, 1250, 5000, 50000, 500000, 1000000], CurrencyType.Oil), [0, 1, 2, 3, 4, 5, 6, 7, 8], true),
             ]
         )
 
@@ -55,23 +57,29 @@ export class Gasoline extends Feature {
         this.actions = [
             new GasolineAction(
                 1,
-                new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "Dig randomly", 3,
-                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                new DiscreteUpgrade("gasoline-first-machine", UpgradeType.GasolineMachine, "Dig randomly", 10,
+                    CurrencyBuilder.createArray([1, 5, 10, 20, 30, 40, 50, 70, 100, 150], CurrencyType.Gasoline), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], true)
             ),
             new GasolineAction(
                 3,
                 new DiscreteUpgrade("gasoline-second-machine", UpgradeType.GasolineMachine, "Purify the Ocean", 3,
-                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                    CurrencyBuilder.createArray([5, 10, 15], CurrencyType.Gasoline), [0, 3, 6, 9], true)
+            ),
+            new GasolineAction(
+                5,
+                new DiscreteUpgrade("gasoline-third-machine", UpgradeType.GasolineMachine, "Oil Drill", 12,
+                    CurrencyBuilder.createArray([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], CurrencyType.Gasoline), [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144], true)
             ),
             new GasolineAction(
                 10,
-                new DiscreteUpgrade("gasoline-third-machine", UpgradeType.GasolineMachine, "Oil Drill", 3,
-                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                new DiscreteUpgrade("gasoline-fourth-machine", UpgradeType.GasolineMachine, "Purify the Ocean", 3,
+                    CurrencyBuilder.createArray([30, 60, 90], CurrencyType.Gasoline), [0, 10, 20, 40], true)
             ),
+
             new GasolineAction(
                 20,
-                new DiscreteUpgrade("gasoline-fourth-machine", UpgradeType.GasolineMachine, "Drilling Platform", 3,
-                    CurrencyBuilder.createArray([1, 5, 10], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                new DiscreteUpgrade("gasoline-fifth-machine", UpgradeType.GasolineMachine, "Drilling Platform", 3,
+                    CurrencyBuilder.createArray([250, 500, 1000], CurrencyType.Gasoline), [0, 200, 500, 1000], true)
             ),
             new ScrapMachineAction(
                 50,
@@ -87,6 +95,8 @@ export class Gasoline extends Feature {
             new OilSpeedup("3x", 50, 3),
             new OilSpeedup("4x", 250, 4),
             new OilSpeedup("5x", 1000, 5),
+            new OilSpeedup("6x", 10000, 6),
+            new OilSpeedup("7x", 100000, 7),
         ]
 
     }
@@ -136,7 +146,7 @@ export class Gasoline extends Feature {
 
         const speedupCost = new Currency(speedup.oilPerSecond * delta, CurrencyType.Oil);
         if (!App.game.wallet.hasCurrency(speedupCost)) {
-            this.selectedOilSpeedup = 0;
+            this.selectedOilSpeedup--;
             oilSpeedupMultiplier = 1
         } else {
             oilSpeedupMultiplier = speedup.speedMultiplier;
@@ -144,7 +154,6 @@ export class Gasoline extends Feature {
         }
 
         for (const action of this.actions) {
-
             action.progress(delta * speedMultiplier * oilSpeedupMultiplier);
         }
     }
