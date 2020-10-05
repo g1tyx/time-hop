@@ -13,7 +13,7 @@ export class Grid {
         for (let y = 0; y < this.height; y++) {
             const row = [];
             for (let x = 0; x < this.width; x++) {
-                row.push(new Tile(10, rewardDistribution.draw()));
+                row.push(new Tile(1, rewardDistribution.draw()));
             }
             this.grid.push(row);
         }

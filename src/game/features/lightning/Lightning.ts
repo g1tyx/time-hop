@@ -27,6 +27,7 @@ export class Lightning extends Feature {
     rods: number;
     autoStrikes: number;
     regenTime: number;
+    conversionGain: number;
 
     rewardDistribution: WeightedDistribution<LightningReward>;
 
@@ -41,9 +42,12 @@ export class Lightning extends Feature {
         this.bolts = 0;
 
         this.rewardDistribution = new WeightedDistribution<LightningReward>([
-            new Outcome<LightningReward>(LightningReward.Nothing, 0),
-            new Outcome<LightningReward>(LightningReward.Rods, 10),
-            new Outcome<LightningReward>(LightningReward.AutoStrike, 100),
+            new Outcome<LightningReward>(LightningReward.Nothing, 1),
+            new Outcome<LightningReward>(LightningReward.Rods, 6),
+            new Outcome<LightningReward>(LightningReward.ConversionGain, 4),
+            new Outcome<LightningReward>(LightningReward.AutoStrike, 1.5),
+            new Outcome<LightningReward>(LightningReward.Oil, 0.3),
+            new Outcome<LightningReward>(LightningReward.RegenTime, 2),
         ])
 
         this.grid = new Grid(this.rewardDistribution);
@@ -51,7 +55,7 @@ export class Lightning extends Feature {
         this.rods = 1;
         this.autoStrikes = 0;
         this.regenTime = 0;
-
+        this.conversionGain = 0;
 
         this.conversionCount = 0;
 
@@ -60,22 +64,35 @@ export class Lightning extends Feature {
 
     }
 
+    tileRegenTime(): number {
+        return 3 / (1 + Math.sqrt(this.regenTime / 10));
+    }
+
     autoStrikeTime() {
-        return 3000 / Math.max(1, Math.sqrt(this.autoStrikes));
+        return Math.max(100, 2000 / (1 + this.autoStrikes / 3));
+    }
+
+    autoStrikeAmount() {
+        if (this.autoStrikeTime() > 100) {
+            return 1;
+        }
+        return 1 + Math.sqrt(this.autoStrikes / 3);
     }
 
     autoStrike() {
-        this.nextAutoStrike = Date.now() + this.autoStrikeTime();
-        const x = Random.intBetween(0, this.grid.width);
-        const y = Random.intBetween(0, this.grid.height);
-        this.strike(x, y);
+        for (let i = 0; i < this.autoStrikeAmount(); i++) {
+            this.nextAutoStrike = Date.now() + this.autoStrikeTime();
+            const x = Random.intBetween(0, this.grid.width);
+            const y = Random.intBetween(0, this.grid.height);
+            this.strike(x, y);
+        }
     }
 
     strike(x: number, y: number) {
         if (!this.grid.grid[y][x].isReady) {
             return;
         }
-        if (this.bolts > 0) {
+        if (this.bolts >= 1) {
             this.bolts--;
             const reward = this.grid.strike(x, y);
             this.gainReward(reward);
@@ -106,15 +123,19 @@ export class Lightning extends Feature {
                 return;
             case LightningReward.RegenTime:
                 this.regenTime++;
+                return;
+            case LightningReward.ConversionGain:
+                this.conversionGain++;
+                return;
         }
     }
 
     conversionCost(): number {
-        return (this.conversionCount / 4) + 1
+        return (this.conversionCount / 4) + 1;
     }
 
     conversionBoltGain(): number {
-        return 1
+        return 1 + Math.sqrt(this.conversionGain / 10);
     }
 
     convertLightning() {
@@ -154,7 +175,7 @@ export class Lightning extends Feature {
 
         App.game.wallet.gainLightning(this.rods * delta);
 
-        this.grid.regenerateCells(delta);
+        this.grid.regenerateCells(delta / this.tileRegenTime());
     }
 
     load(data: LightningSaveData): void {

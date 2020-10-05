@@ -2,65 +2,105 @@
   <div v-show="canAccess">
     <h3>{{ lightningAmount | twoDigits }} Lightning, {{ boltAmount | twoDigits }} Bolts</h3>
 
-    <p>Your {{ lightning.rods }} rods are generating {{ lightning.rods }} Lightning/s</p>
-    <div class="upgrade-list">
-      <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
-    </div>
-
-    <h3>Convert</h3>
-    <button class="btn btn-primary" @click="lightning.convertLightning()">Convert {{ conversionCost }} Lightning to
-      {{ conversionBoltGain }} Bolts
+    <button class="btn btn-primary" @click="lightning.convertLightning()">Convert {{ conversionCost | twoDigits }}
+      Lightning to {{ conversionBoltGain | twoDigits }} Bolts<br>
       <boolean-setting :setting="autoConvertBoltsSetting" :show-description="true"></boolean-setting>
-
     </button>
-
-
-    Auto strike bolts every {{ lightning.autoStrikeTime() / 1000  | twoDigits }} seconds
-    <boolean-setting :setting="autoStrikeSetting" :show-description="false"></boolean-setting>
-
     <button v-if="oilAmount > 0" @click="oilConvert" class="btn btn-primary" :disabled="oilAmount < oilGoal">
       Convert 100 oil to 1 gasoline<br>
       You have {{ oilAmount }} oil.
     </button>
 
-    <div class="grid">
+    <div class="legend">
+      <div class="row">
+        <div class="legend-tile tile" style="cursor: auto" :style="{'background-color': lightningReward.Rods}"></div>
+        <h4>Lightning Rod. Your {{ lightning.rods | twoDigits }} rods are generating {{ lightning.rods |twoDigits }}
+          Lightning/s
+        </h4>
+      </div>
+      <div class="row">
+        <div class="legend-tile tile" style="cursor: auto"
+             :style="{'background-color': lightningReward.RegenTime}"></div>
+        <h4>Tile regen time. Tiles are regenerating every {{ lightning.tileRegenTime() | twoDigits }} seconds</h4>
+      </div>
+      <div class="row">
+      </div>
+      <div class="row">
+        <div class="legend-tile tile" style="cursor: auto"
+             :style="{'background-color': lightningReward.AutoStrike}"></div>
+        <div v-if="lightning.autoStrikes > 0">
+          <h4>Auto bolt. {{ lightning.autoStrikeAmount() | twoDigits }} times every
+            {{ lightning.autoStrikeTime() / 1000 | twoDigits }} seconds
+            <boolean-setting :setting="autoStrikeSetting" :show-description="false"></boolean-setting>
+          </h4>
+        </div>
+        <h4 v-else>Auto bolt.</h4>
+      </div>
+      <div class="row">
+        <div class="legend-tile tile" style="cursor: auto"
+             :style="{'background-color': lightningReward.ConversionGain}"></div>
+        <h4>
+          Bolt conversion rate. Currently {{ conversionCost | twoDigits }} Lightning to
+          {{ conversionBoltGain | twoDigits }} Bolts
+        </h4>
+      </div>
+      <div class="row">
+        <div class="legend-tile tile" style="cursor: auto" :style="{'background-color': lightningReward.Oil}"></div>
+        <h4>Oil. You have {{ oilAmount }}</h4>
+      </div>
+    </div>
+
+
+    <h3>Cast your bolts on the ground to find rewards!</h3>
+    <p></p>
+    <div id="lightning-grid" class="grid">
       <div class="row" v-for="(row, y) in grid" :key="'row-' + y">
         <div
             :class="{'tile-ready': tile.isReady}"
-            @click="strike(x, y)" class="tile" v-for="(tile, x) in row" :key="'tile-'+x+'-'+y">
-          <span v-if="!tile.isReady">{{ tile.reward }}</span>
+            @click="strike(x,y)" @mouseover="strikeHover(x,y)" class="tile" v-for="(tile, x) in row"
+            :key="'tile-'+x+'-'+y"
+            :style="{'background-color': tile.color}">
         </div>
       </div>
 
     </div>
+
   </div>
 </template>
 
 <script>
 import {App} from "@/App.ts";
-import Upgrade from "@/components/Upgrade";
 import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 import BooleanSetting from "@/components/BooleanSetting";
+import {LightningReward} from "@/game/features/lightning/LightningReward";
 
 export default {
 
   name: "Lightning",
-  components: {BooleanSetting, Upgrade},
+  components: {BooleanSetting},
   data() {
     return {
       lightning: App.game.lightning,
       wallet: App.game.wallet,
       autoConvertBoltsSetting: App.game.settings.getSetting("auto-convert-bolts"),
       autoStrikeSetting: App.game.settings.getSetting("auto-strike-bolts"),
+      lightningReward: LightningReward,
+      mouseDown: false,
     }
   },
   methods: {
     strike(x, y) {
       this.lightning.strike(x, y);
     },
+    strikeHover(x, y) {
+      if (!this.mouseDown) {
+        return;
+      }
+      this.lightning.strike(x, y);
+    },
     oilConvert() {
       this.lightning.oilConvert();
-    }
+    },
   },
 
   computed: {
@@ -91,6 +131,14 @@ export default {
     },
     conversionCost() {
       return this.lightning.conversionCost();
+    },
+  },
+  mounted() {
+    document.getElementById("lightning-grid").onmousedown = () => {
+      this.mouseDown = true;
+    }
+    document.getElementById("lightning-grid").onmouseup = () => {
+      this.mouseDown = false;
     }
   }
 }
@@ -114,7 +162,14 @@ export default {
   cursor: pointer;
 }
 
-.tile-ready {
-  background-color: saddlebrown;
+.legend {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-tile {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
 }
 </style>

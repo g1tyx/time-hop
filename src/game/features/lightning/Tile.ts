@@ -26,6 +26,14 @@ export class Tile {
         }
     }
 
+
+    get color(): string {
+        if (this.isReady) {
+            return "saddlebrown";
+        }
+        return this.reward;
+    }
+
     respawn() {
         this.isReady = true;
         this.reward = this.nextReward;
