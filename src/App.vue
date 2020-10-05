@@ -1,32 +1,46 @@
 <template>
   <div class="container">
-    <wallet></wallet>
     <time-line></time-line>
-    <scrap></scrap>
-    <gasoline></gasoline>
-    <lightning></lightning>
-    <plutonium></plutonium>
-    <credits></credits>
+    <div class="column">
+    <div class="row">
+      <lightning></lightning>
+
+    </div>
+      <div class="row">
+        <scrap></scrap>
+
+        <gasoline></gasoline>
+
+      </div>
+      <credits></credits>
+    </div>
   </div>
 </template>
 
 <script>
 
 
-import Wallet from "@/components/Wallet";
 import Scrap from "@/components/features/Scrap";
 import TimeLine from "@/components/features/TimeLine";
 import Gasoline from "@/components/features/Gasoline";
 import Lightning from "@/components/features/Lightning";
-import Plutonium from "@/components/features/Plutonium";
 import Credits from "@/components/Credits";
+
 export default {
 
-  components: {Credits, Plutonium, Lightning, Gasoline, TimeLine, Scrap, Wallet},
+  components: {Credits, Lightning, Gasoline, TimeLine, Scrap},
 
   methods: {}
 }
 </script>
 
 <style>
+.column {
+  display: flex;
+  flex-direction: column;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
 </style>

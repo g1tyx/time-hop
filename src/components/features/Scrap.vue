@@ -1,6 +1,6 @@
 <template>
-  <div v-if="canAccess">
-    <h3>{{ scrapAmount | twoDigits}} Scrap</h3>
+  <div class="container" v-if="canAccess">
+    <h3>{{ scrapAmount | twoDigits }} Scrap</h3>
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
@@ -49,5 +49,9 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  border: 1px solid black;
+  padding: 20px;
+}
 
 </style>

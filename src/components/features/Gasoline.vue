@@ -1,5 +1,5 @@
 <template>
-  <div v-if="canAccess">
+  <div class="container" v-if="canAccess">
 
     <h3>{{ oilAmount | twoDigits }} Oil, {{ gasolineAmount | twoDigits }} Gasoline</h3>
 
@@ -99,5 +99,8 @@ export default {
 </script>
 
 <style scoped>
-
+.container {
+  border: 1px solid black;
+  padding: 20px;
+}
 </style>
