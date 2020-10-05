@@ -193,7 +193,10 @@ export class Gasoline extends Feature {
         for (const action of this.actions) {
             action.isStarted = false;
             action.value = 0;
+            action.upgrade.level = 0;
         }
+        this.conversionCount = 0;
+
     }
 }
 
