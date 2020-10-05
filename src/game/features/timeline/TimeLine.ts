@@ -107,9 +107,9 @@ export class TimeLine extends Feature {
             case TimeLineState.Lightning:
                 App.game.wallet.gainLightning(1);
                 break;
-            case TimeLineState.Plutonium:
-                App.game.wallet.gainPlutonium(1);
-                break;
+            // case TimeLineState.Plutonium:
+            //     App.game.wallet.gainPlutonium(1);
+            //     break;
             case TimeLineState.FluxCapacitor:
                 App.game.wallet.gainPlutonium(10);
                 break;

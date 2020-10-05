@@ -1,9 +1,10 @@
 <template>
-
   <div v-show="canAccess">
-    Plutonium:
-    <div class="upgrade-list">
-      <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
+    <div>
+    <div style="display: flex; justify-content: center;">
+      <credits></credits>
+
+    </div>
     </div>
   </div>
 </template>
@@ -11,11 +12,12 @@
 <script>
 import {App} from "@/App.ts";
 import Upgrade from "@/components/Upgrade";
+import Credits from "@/components/Credits";
 
 export default {
 
   name: "Plutonium",
-  components: {Upgrade},
+  components: {Credits},
   data() {
     return {
       plutonium: App.game.plutonium

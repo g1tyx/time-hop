@@ -12,7 +12,7 @@
         <scrap></scrap>
       </div>
       <div class="row">
-        <credits></credits>
+        <plutonium></plutonium>
       </div>
     </div>
   </div>
@@ -26,10 +26,11 @@ import TimeLine from "@/components/features/TimeLine";
 import Gasoline from "@/components/features/Gasoline";
 import Lightning from "@/components/features/Lightning";
 import Credits from "@/components/Credits";
+import Plutonium from "@/components/features/Plutonium";
 
 export default {
 
-  components: {Credits, Lightning, Gasoline, TimeLine, Scrap},
+  components: {Plutonium, Lightning, Gasoline, TimeLine, Scrap},
 
   methods: {}
 }

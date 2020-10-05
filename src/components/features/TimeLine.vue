@@ -14,9 +14,9 @@
             <div class="milestones milestone__0">
               <div class="dot" :class="{'completed': percentage >= 0, 'colored': percentage >= 0}"></div>
             </div>
-            <div class="milestones milestone__20">
-              <div class="dot" :class="{'completed': percentage >= 0.2, 'colored': percentage >= 0.2}"></div>
-            </div>
+<!--            <div class="milestones milestone__20">-->
+<!--              <div class="dot" :class="{'completed': percentage >= 0.2, 'colored': percentage >= 0.2}"></div>-->
+<!--            </div>-->
             <div class="milestones milestone__40">
               <div class="dot" :class="{'completed': percentage >= 0.4, 'colored': percentage >= 0.4}"></div>
             </div>
@@ -37,9 +37,9 @@
             <div class="label colored">{{ timeLine.state >= timeLineState.FluxCapacitor ? 'Flux Capacitor' : '???' }}
             </div>
           </div>
-          <div class="milestones milestone__20">
-            <div class="label colored">{{ timeLine.state >= timeLineState.Plutonium ? 'Plutonium' : '???' }}</div>
-          </div>
+<!--          <div class="milestones milestone__20">-->
+<!--            <div class="label colored">{{ timeLine.state >= timeLineState.Plutonium ? 'Plutonium' : '???' }}</div>-->
+<!--          </div>-->
           <div class="milestones milestone__40">
             <div class="label colored">{{ timeLine.state >= timeLineState.Lightning ? 'Lightning' : '???' }}</div>
           </div>
@@ -58,8 +58,10 @@
     </div>
 
     <div style="display: flex; justify-content: center;">
-      <button class="btn btn-primary" @click="timeTravel" :disabled="!canTimeTravel" style="padding:20px; margin:20px">
-        Reach {{ timeLine.SCRAP_GOAL }} Scrap to Time travel
+      <button v-if="timeLine.state !== timeLineState.FluxCapacitor"
+          class="btn btn-primary" @click="timeTravel" :disabled="!canTimeTravel" style="padding:20px; margin:20px">
+        Reach {{ timeLine.SCRAP_GOAL }} Scrap to <span v-if="timeLine.state === timeLineState.Lightning">Complete the game</span>
+        <span v-else>Time travel</span>
       </button>
     </div>
   </div>
@@ -104,9 +106,9 @@ export default {
       } else if (this.timeLine.canAccessLightning) {
         return Math.min(0.6, 0.4 + 0.2 * this.logProgress(App.game.wallet.getAmount(CurrencyType.Oil), this.timeLine.OIL_GOAL));
       } else if (this.timeLine.canAccessPlutonium) {
-        return 0.2;
+        return 1;
       }
-      return 0.2;
+      return 0;
     }
   }
 }
