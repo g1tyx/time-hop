@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-if="canAccess">
 
-    <h3>{{ oilAmount | twoDigits }} Oil, {{ gasolineAmount | twoDigits }} Gasoline</h3>
+    <h3 style="text-align: center">{{ oilAmount | twoDigits }} Oil, {{ gasolineAmount | twoDigits }} Gasoline</h3>
 
     <div class="centered-row">
       <div v-if="canConvert" style="">
@@ -105,6 +105,7 @@ export default {
 .container {
   border: 1px solid black;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .action-list {

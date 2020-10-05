@@ -159,7 +159,7 @@ export default {
 .container {
   border: 1px solid black;
   padding: 20px;
-
+  margin-bottom: 20px;
 }
 
 .container-row {

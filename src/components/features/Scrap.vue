@@ -1,10 +1,11 @@
 <template>
   <div class="container" v-if="canAccess">
-    <h3>{{ scrapAmount | twoDigits }} Scrap</h3>
+    <h3 style="text-align: center">{{ scrapAmount | twoDigits }} Scrap</h3>
     <div class="action-list">
       <scrap-action v-for="action in availableActions" :key="action.description" :action="action">
       </scrap-action>
     </div>
+    <br>
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
@@ -53,6 +54,7 @@ export default {
 .container {
   border: 1px solid black;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .action-list {
