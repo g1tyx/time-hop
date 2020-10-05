@@ -19,7 +19,7 @@ export class App {
     static start(): void {
         this.game = this.createNewGame()
         this.game.initialize();
-        this.game.load();
+        // this.game.load();
         this.game.start();
     }
 
