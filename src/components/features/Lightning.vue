@@ -58,16 +58,17 @@
 
       <div class="right-column">
         <h3>Cast your bolts on the ground to find rewards!</h3>
-        <div id="lightning-grid" class="grid">
-          <div class="row" v-for="(row, y) in grid" :key="'row-' + y">
-            <div
-                :class="{'tile-ready': tile.isReady}"
-                @click="strike(x,y)" @mouseover="strikeHover(x,y)" class="tile" v-for="(tile, x) in row"
-                :key="'tile-'+x+'-'+y"
-                :style="{'background-color': tile.color}">
+        <div style="display: flex; justify-content: center;">
+          <div id="lightning-grid" class="grid">
+            <div class="row" v-for="(row, y) in grid" :key="'row-' + y">
+              <div
+                  :class="{'tile-ready': tile.isReady}"
+                  @click="strike(x,y)" @mouseover="strikeHover(x,y)" class="tile" v-for="(tile, x) in row"
+                  :key="'tile-'+x+'-'+y"
+                  :style="{'background-color': tile.color}">
+              </div>
             </div>
           </div>
-
         </div>
       </div>
 
