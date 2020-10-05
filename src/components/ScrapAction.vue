@@ -1,5 +1,5 @@
 <template>
-  <button @click="start" class="btn btn-primary" data-progress-style="fill-back" :disabled="action.isStarted">
+  <button @click="start" class="btn scrap" data-progress-style="fill-back" :disabled="action.isStarted">
     {{ action.description }}
     (+{{ this.action.scrapReward() }})
     <div class="progress">
@@ -34,6 +34,15 @@ export default {
 </script>
 
 <style scoped>
+.scrap {
+  background-color: saddlebrown;
+  color: #e8e8e8;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 200px;
+  flex-grow: 1;
+}
+
 .progress-bar {
   transition: none;
 }

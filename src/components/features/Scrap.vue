@@ -55,4 +55,13 @@ export default {
   padding: 20px;
 }
 
+.action-list {
+  display: flex;
+}
+
+.upgrade-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 </style>

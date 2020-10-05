@@ -122,7 +122,7 @@ export default {
 }
 
 $milestone-base-color: #cccccc;
-$milestone-progress-color: #000000;
+$milestone-progress-color: #ffffff;
 $milestone-0-color: #ff0000;
 $milestone-20-color: #55ff00;
 $milestone-40-color: #FDD023;

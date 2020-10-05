@@ -1,5 +1,5 @@
 <template>
-  <button @click="buy" class="btn btn-primary" data-progress-style="fill-back" :disabled="!canBuy">
+  <button @click="buy" class="btn gasoline" data-progress-style="fill-back" :disabled="!canBuy">
     <p>{{ upgrade.displayName }} +{{ reward.amount }} {{ reward.type }}</p>
     <div class="progress">
       <div class="progress-bar" role="progressbar" :aria-valuenow="action.percentage * 100"
@@ -15,7 +15,7 @@
             Upgrade
           </template>
         </currency>
-        Level {{ upgrade.level}}
+        Level {{ upgrade.level }}
       </div>
     </div>
   </button>
@@ -63,6 +63,14 @@ export default {
 </script>
 
 <style scoped>
+.gasoline {
+  background-color: #242020;
+  color: #e8e8e8;
+  margin-right: 10px;
+  width: 200px;
+  flex-grow: 1;
+}
+
 .progress-bar {
   transition: none;
 }

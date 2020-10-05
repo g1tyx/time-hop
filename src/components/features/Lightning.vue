@@ -4,7 +4,7 @@
       <div class="left-column">
         <h3>{{ lightningAmount | twoDigits }} Lightning, {{ boltAmount | twoDigits }} Bolts</h3>
 
-        <button class="btn btn-primary" @click="lightning.convertLightning()">Convert {{ conversionCost | twoDigits }}
+        <button class="btn btn-success" @click="lightning.convertLightning()">Convert {{ conversionCost | twoDigits }}
           Lightning to {{ conversionBoltGain | twoDigits }} Bolts<br>
           <boolean-setting :setting="autoConvertBoltsSetting" :show-description="true"></boolean-setting>
         </button>

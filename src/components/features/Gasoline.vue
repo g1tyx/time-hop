@@ -3,24 +3,31 @@
 
     <h3>{{ oilAmount | twoDigits }} Oil, {{ gasolineAmount | twoDigits }} Gasoline</h3>
 
+    <div class="centered-row">
+      <div v-if="canConvert" style="">
+        <button class="btn btn-success" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
+          {{ conversionGasolineGain }} Gasoline<br>
+          <boolean-setting :setting="autoConvertOilSetting" :show-description="true"></boolean-setting>
+        </button>
+      </div>
+
+    </div>
+
+    <br>
+
     <div class="action-list">
       <gasoline-action v-for="action in availableActions" :key="action.description" :action="action">
       </gasoline-action>
     </div>
 
-    <div v-if="canConvert">
-      <button class="btn btn-primary" @click="gasoline.convertOil()">Convert {{ conversionCost }} Oil to
-        {{ conversionGasolineGain }} Gasoline<br>
-        <boolean-setting :setting="autoConvertOilSetting" :show-description="true"></boolean-setting>
+    <br>
 
-      </button>
-    </div>
     <div class="oil-upgrades-list">
       <upgrade v-for="upgrade in oilUpgrades" :key="upgrade.identifier" :upgrade="upgrade">
       </upgrade>
     </div>
 
-
+    <br>
     <div v-if="oilSpeedupCount > 1">
       <div class="speedup-list">
         <oil-speedup v-for="(_, index) in oilSpeedupCount" :key="oilSpeedups[index].label"
@@ -98,5 +105,22 @@ export default {
 .container {
   border: 1px solid black;
   padding: 20px;
+}
+
+.action-list {
+  display: flex;
+}
+
+.oil-upgrades-list {
+  display: flex;
+}
+
+.speedup-list {
+  display: flex;
+}
+
+.centered-row {
+  display: flex;
+  justify-content: center;
 }
 </style>
