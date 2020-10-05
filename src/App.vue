@@ -15,6 +15,9 @@
         <plutonium></plutonium>
       </div>
     </div>
+
+    <intro-modal></intro-modal>
+
   </div>
 </template>
 
@@ -25,14 +28,19 @@ import Scrap from "@/components/features/Scrap";
 import TimeLine from "@/components/features/TimeLine";
 import Gasoline from "@/components/features/Gasoline";
 import Lightning from "@/components/features/Lightning";
-import Credits from "@/components/Credits";
 import Plutonium from "@/components/features/Plutonium";
+import IntroModal from "@/components/IntroModal";
 
 export default {
 
-  components: {Plutonium, Lightning, Gasoline, TimeLine, Scrap},
+  components: {IntroModal, Plutonium, Lightning, Gasoline, TimeLine, Scrap},
 
-  methods: {}
+  methods: {},
+
+  mounted() {
+    this.$modal.show('example')
+
+  }
 }
 </script>
 

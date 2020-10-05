@@ -10,7 +10,8 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "strongly-typed-events": "^1.6.17",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-js-modal": "^2.0.0-rc.6"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",
