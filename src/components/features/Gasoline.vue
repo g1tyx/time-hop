@@ -110,14 +110,17 @@ export default {
 
 .action-list {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .oil-upgrades-list {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .speedup-list {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .centered-row {
