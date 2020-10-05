@@ -5,7 +5,7 @@
     <h2>Thank you for playing my game. I hope you enjoyed it.</h2>
 
     <br>
-    <h3>Created by <a target="_blank" href="https://www.github.com/ishadijcks">IshaD</a>. Talk to me on Discord! (IshaD#1866)</h3>
+    <h3>Created by <a target="_blank" href="https://www.github.com/ishadijcks">IshaD</a></h3>
 
     <br>
     <br>
