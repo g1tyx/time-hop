@@ -55,8 +55,7 @@ export default {
     return {
       gasoline: App.game.gasoline,
       autoConvertOilSetting: App.game.settings.getSetting("auto-convert-oil"),
-      oilAmount: App.game.wallet.currencies[CurrencyType[CurrencyType.Oil]],
-      gasolineAmount: App.game.wallet.currencies[CurrencyType[CurrencyType.Gasoline]],
+      wallet: App.game.wallet,
     }
   },
   methods: {},
@@ -89,6 +88,12 @@ export default {
     },
     conversionGasolineGain() {
       return this.gasoline.conversionGasolineGain();
+    },
+    oilAmount() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Oil]];
+    },
+    gasolineAmount() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Gasoline]];
     }
   }
 }

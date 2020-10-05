@@ -25,7 +25,7 @@ export default {
     return {
       statistic: App.game.statistics,
       scrap: App.game.scrap,
-      scrapAmount: App.game.wallet.currencies[CurrencyType[CurrencyType.Scrap]],
+      wallet: App.game.wallet,
     }
   },
   methods: {},
@@ -40,6 +40,9 @@ export default {
     },
     availableActions() {
       return this.scrap.actions.filter(action => action.requirements.isCompleted());
+    },
+    scrapAmount() {
+      return this.wallet.currencies[CurrencyType[CurrencyType.Scrap]];
     }
   }
 }
