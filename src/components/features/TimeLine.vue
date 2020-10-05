@@ -1,14 +1,6 @@
 <template>
   <div>
-    <div style="display: flex; justify-content: center;">
-      <button class="btn btn-primary" @click="timeTravel" :disabled="!canTimeTravel" style="padding:20px;">
-        Reach {{ timeLine.SCRAP_GOAL }} Scrap to Time travel
-      </button>
-    </div>
     <br>
-    <br>
-    <br>
-
     <div class="vefs-milestone-wrapper">
       <div class="milestone-container">
 
@@ -65,6 +57,11 @@
       </div>
     </div>
 
+    <div style="display: flex; justify-content: center;">
+      <button class="btn btn-primary" @click="timeTravel" :disabled="!canTimeTravel" style="padding:20px; margin:20px">
+        Reach {{ timeLine.SCRAP_GOAL }} Scrap to Time travel
+      </button>
+    </div>
   </div>
 </template>
 
@@ -134,8 +131,8 @@ $milestone-100-color: #73d2de;
 
 
 .vefs-milestone-wrapper {
-  $component-height: 150px;
-  $line-height: $component-height / 10;
+  $component-height: 80px;
+  $line-height: 15px;
   $dot-size: $line-height * 2.5;
 
   .milestone-container {
@@ -148,7 +145,7 @@ $milestone-100-color: #73d2de;
       display: flex;
       flex-flow: column;
       align-items: center;
-      flex: 1 15%;
+      flex:1 75%;
 
       .line-container {
         position: absolute;
