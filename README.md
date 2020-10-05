@@ -1,4 +1,4 @@
-# Ludum Dara 47 - TimeHop
+# Ludum Dare 47 - TimeHop
 
 Let's hope it's fun
 
