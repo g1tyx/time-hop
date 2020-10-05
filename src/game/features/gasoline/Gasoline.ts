@@ -42,11 +42,11 @@ export class Gasoline extends Feature {
         this.oilUpgrades = new UpgradeList<Upgrade, UpgradeSaveData>(
             [
                 new DiscreteUpgrade("oil-global-value", UpgradeType.OilValue, "Increase oil value", 13,
-                    CurrencyBuilder.createArray([20, 50, 100, 250, 500, 1000, 2000, 4000, 6000, 10000, 25000, 50000, 100000], CurrencyType.Oil), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12.5, 15, 17.5, 20], true),
-                new DiscreteUpgrade("gasoline-machine-speed", UpgradeType.GasolineMachineSpeed, "Increase action speed", 13,
-                    CurrencyBuilder.createArray([30, 100, 500, 1000, 5000, 10000, 15000, 25000, 50000, 100000, 250000, 500000, 1000000], CurrencyType.Oil), [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 19], true),
-                new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Improve conversion gain", 12,
-                    CurrencyBuilder.createArray([40, 80, 150, 300, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000], CurrencyType.Oil), [1.0, 1.1, 1.2, 1.5, 1.7, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 5], true),
+                    CurrencyBuilder.createArray([20, 50, 100, 250, 500, 1000, 2000, 4000, 10000, 25000, 50000, 100000, 250000], CurrencyType.Oil), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12.5, 15, 17.5, 20], true),
+                new DiscreteUpgrade("gasoline-machine-speed", UpgradeType.GasolineMachineSpeed, "Increase action speed", 15,
+                    CurrencyBuilder.createArray([30, 100, 500, 1000, 5000, 10000, 15000, 25000, 50000, 100000, 250000, 500000, 1000000, 2500000, 5000000], CurrencyType.Oil), [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14], true),
+                new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Improve conversion gain", 17,
+                    CurrencyBuilder.createArray([40, 80, 150, 300, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000, 150000], CurrencyType.Oil), [1.0, 1.1, 1.2, 1.5, 1.7, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 5, 6, 7, 8, 9, 10], true),
                 new DiscreteUpgrade("gasoline-unlock-oil-speedup", UpgradeType.UnlockOilSpeedup, "Unlock Greasing", 8,
                     // Grease prices are 5x the oil/s
                     CurrencyBuilder.createArray([5, 25, 250, 1250, 5000, 50000, 500000, 1000000], CurrencyType.Oil), [0, 1, 2, 3, 4, 5, 6, 7, 8], true),
@@ -82,9 +82,9 @@ export class Gasoline extends Feature {
                     CurrencyBuilder.createArray([250, 500, 1000], CurrencyType.Gasoline), [0, 200, 500, 1000], true)
             ),
             new ScrapMachineAction(
-                50,
-                new DiscreteUpgrade("gasoline-scrap-machine", UpgradeType.GasolineMachine, "Scrap Machine", 3,
-                    CurrencyBuilder.createArray([App.game.timeLine.GASOLINE_GOAL, App.game.timeLine.GASOLINE_GOAL * 2, App.game.timeLine.GASOLINE_GOAL * 3], CurrencyType.Gasoline), [0, 1, 2, 3], true)
+                1000,
+                new DiscreteUpgrade("gasoline-scrap-machine", UpgradeType.GasolineMachine, "Scrap Machine", 5,
+                    CurrencyBuilder.createArray([App.game.timeLine.GASOLINE_GOAL, App.game.timeLine.GASOLINE_GOAL * 1.5, App.game.timeLine.GASOLINE_GOAL * 2, App.game.timeLine.GASOLINE_GOAL * 3, App.game.timeLine.GASOLINE_GOAL * 4, App.game.timeLine.GASOLINE_GOAL * 5], CurrencyType.Gasoline), [0, 1, 5, 10, 50, 100], true)
             )
         ]
 
@@ -131,9 +131,13 @@ export class Gasoline extends Feature {
 
         if (App.game.settings.getSetting("auto-convert-oil")?.value) {
             // Give the player a small buffer so their oil speedup doesn't run out.
-            const cost = new Currency(this.conversionCost() + this.oilSpeedups[this.selectedOilSpeedup].oilPerSecond, CurrencyType.Oil)
-            if (App.game.wallet.hasCurrency(cost)) {
-                this.convertOil();
+            for (let i = 0; i < 100; i++) {
+                const cost = new Currency(this.conversionCost() + this.oilSpeedups[this.selectedOilSpeedup].oilPerSecond, CurrencyType.Oil)
+                if (App.game.wallet.hasCurrency(cost)) {
+                    this.convertOil();
+                } else {
+                    break;
+                }
 
             }
         }
