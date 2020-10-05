@@ -66,6 +66,7 @@ export class TimeLine extends Feature {
 
         // Reset prestige statistics
         (App.game.statistics.getStatistic(StatisticType.TotalScrapGainedThisPrestige) as NumberStatistic).value = 0;
+        (App.game.statistics.getStatistic(StatisticType.TotalOilGainedThisPrestige) as NumberStatistic).value = 0;
         (App.game.statistics.getStatistic(StatisticType.TotalGasolineGainedThisPrestige) as NumberStatistic).value = 0;
         (App.game.statistics.getStatistic(StatisticType.TotalLightningGainedThisPrestige) as NumberStatistic).value = 0;
         (App.game.statistics.getStatistic(StatisticType.TotalPlutoniumGainedThisPrestige) as NumberStatistic).value = 0;

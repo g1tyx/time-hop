@@ -76,7 +76,7 @@ export class Gasoline extends Feature {
             ),
             new GasolineAction(
                 10,
-                new DiscreteUpgrade("gasoline-fourth-machine", UpgradeType.GasolineMachine, "Purify the Ocean", 3,
+                new DiscreteUpgrade("gasoline-fourth-machine", UpgradeType.GasolineMachine, "Purify the Ocean again", 3,
                     CurrencyBuilder.createArray([30, 60, 90], CurrencyType.Gasoline), [0, 10, 20, 40], true)
                 , new MultiRequirement([new StatisticRequirement(StatisticType.TotalGasolineGainedThisPrestige, 30)]),
             ),
