@@ -10,7 +10,7 @@
         </button>
         <button v-if="oilAmount > 0" @click="oilConvert" class="btn btn-primary" :disabled="oilAmount < oilGoal">
           Convert 100 oil to 1 gasoline<br>
-          You have {{ oilAmount }} oil.
+          You have {{ oilAmount | twoDigits }} oil.
         </button>
 
         <div class="legend">

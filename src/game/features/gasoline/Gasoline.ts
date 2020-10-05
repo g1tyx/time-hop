@@ -121,6 +121,9 @@ export class Gasoline extends Feature {
     }
 
     convertOil() {
+        if (this.conversionGasolineGain() <= 0) {
+            return;
+        }
         const cost = new Currency(this.conversionCost(), CurrencyType.Oil)
         if (!App.game.wallet.hasCurrency(cost)) {
             return;
