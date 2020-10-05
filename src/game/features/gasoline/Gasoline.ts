@@ -82,7 +82,7 @@ export class Gasoline extends Feature {
                     CurrencyBuilder.createArray([250, 500, 1000], CurrencyType.Gasoline), [0, 200, 500, 1000], true)
             ),
             new ScrapMachineAction(
-                1000,
+                500,
                 new DiscreteUpgrade("gasoline-scrap-machine", UpgradeType.GasolineMachine, "Scrap Machine", 5,
                     CurrencyBuilder.createArray([App.game.timeLine.GASOLINE_GOAL, App.game.timeLine.GASOLINE_GOAL * 1.5, App.game.timeLine.GASOLINE_GOAL * 2, App.game.timeLine.GASOLINE_GOAL * 3, App.game.timeLine.GASOLINE_GOAL * 4, App.game.timeLine.GASOLINE_GOAL * 5], CurrencyType.Gasoline), [0, 1, 5, 10, 50, 100], true)
             )
