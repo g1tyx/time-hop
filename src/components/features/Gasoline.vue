@@ -1,6 +1,8 @@
 <template>
   <div v-if="canAccess">
 
+    <h3>{{ oilAmount }} Oil, {{gasolineAmount}} Gasoline</h3>
+
     <h3>Machines</h3>
     <div class="action-list">
       <gasoline-action v-for="action in availableActions" :key="action.description" :action="action">
@@ -41,6 +43,7 @@ import GasolineAction from "@/components/GasolineAction";
 import BooleanSetting from "@/components/BooleanSetting";
 import OilSpeedup from "@/components/OilSpeedup";
 import {SingleLevelUpgrade} from "@/engine/upgrades/SingleLevelUpgrade";
+import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 
 export default {
 
@@ -50,6 +53,8 @@ export default {
     return {
       gasoline: App.game.gasoline,
       autoConvertOilSetting: App.game.settings.getSetting("auto-convert-oil"),
+      oilAmount: App.game.wallet.currencies[CurrencyType[CurrencyType.Oil]],
+      gasolineAmount: App.game.wallet.currencies[CurrencyType[CurrencyType.Gasoline]],
     }
   },
   methods: {},

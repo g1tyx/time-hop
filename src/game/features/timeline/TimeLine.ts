@@ -23,7 +23,7 @@ export class TimeLine extends Feature {
     public readonly GASOLINE_GOAL: number = 10000;
 
 
-    public readonly START_STATE: TimeLineState = TimeLineState.Gasoline;
+    public readonly START_STATE: TimeLineState = TimeLineState.Scrap;
 
     constructor() {
         super();

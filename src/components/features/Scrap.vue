@@ -1,5 +1,6 @@
 <template>
   <div v-if="canAccess">
+    <h3>{{ scrapAmount }} Scrap</h3>
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
@@ -14,6 +15,7 @@
 import {App} from "@/App.ts";
 import Upgrade from "@/components/Upgrade";
 import ScrapAction from "@/components/ScrapAction";
+import {CurrencyType} from "@/engine/features/wallet/CurrencyType";
 
 export default {
 
@@ -23,6 +25,7 @@ export default {
     return {
       statistic: App.game.statistics,
       scrap: App.game.scrap,
+      scrapAmount: App.game.wallet.currencies[CurrencyType[CurrencyType.Scrap]],
     }
   },
   methods: {},
