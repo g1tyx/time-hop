@@ -1,7 +1,7 @@
 <template>
   <div v-if="canAccess">
 
-    <h3>{{ oilAmount }} Oil, {{ gasolineAmount }} Gasoline</h3>
+    <h3>{{ oilAmount | twoDigits }} Oil, {{ gasolineAmount | twoDigits }} Gasoline</h3>
 
     <h3>Machines</h3>
     <div class="action-list">
@@ -20,7 +20,6 @@
     <h3>Upgrades</h3>
     <div class="oil-upgrades-list">
       <upgrade v-for="upgrade in oilUpgrades" :key="upgrade.identifier" :upgrade="upgrade">
-
       </upgrade>
     </div>
 

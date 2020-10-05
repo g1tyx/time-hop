@@ -12,6 +12,7 @@ export class Settings extends Feature {
 
     initialize(): void {
         this.add(new BooleanSetting('auto-convert-oil', 'Auto', false));
+        this.add(new BooleanSetting('auto-convert-bolts', 'Auto', false));
     }
 
     public add(setting: Setting): void {

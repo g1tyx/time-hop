@@ -1,6 +1,6 @@
 <template>
   <div v-if="canAccess">
-    <h3>{{ scrapAmount }} Scrap</h3>
+    <h3>{{ scrapAmount | twoDigits}} Scrap</h3>
     <div class="upgrade-list">
       <upgrade v-for="upgrade in upgrades" :key="upgrade.identifier" :upgrade="upgrade"></upgrade>
     </div>
