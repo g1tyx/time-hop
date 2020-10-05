@@ -187,7 +187,13 @@ export class Gasoline extends Feature {
     }
 
     reset() {
-        // Empty
+        for (const upgrade of this.oilUpgrades.list) {
+            upgrade.level = 0;
+        }
+        for (const action of this.actions) {
+            action.isStarted = false;
+            action.value = 0;
+        }
     }
 }
 
