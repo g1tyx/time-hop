@@ -76,6 +76,7 @@ export default {
   data() {
     return {
       timeLine: App.game.timeLine,
+      wallet: App.game.wallet,
       timeLineState: TimeLineState,
     }
   },
@@ -145,7 +146,7 @@ $milestone-100-color: #73d2de;
       display: flex;
       flex-flow: column;
       align-items: center;
-      flex:1 75%;
+      flex: 1 75%;
 
       .line-container {
         position: absolute;
