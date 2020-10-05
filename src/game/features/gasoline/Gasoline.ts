@@ -49,9 +49,9 @@ export class Gasoline extends Feature {
                     CurrencyBuilder.createArray([30, 100, 500, 1000, 5000, 10000, 15000, 25000, 50000, 100000, 250000, 500000, 1000000, 2500000, 5000000], CurrencyType.Oil), [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14], true),
                 new DiscreteUpgrade("gasoline-conversion-value", UpgradeType.GasolineConversionValue, "Oil to Gasoline", 17,
                     CurrencyBuilder.createArray([100, 175, 250, 300, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000, 10000, 20000, 40000, 80000, 150000], CurrencyType.Oil), [0, 1, 1.2, 1.5, 1.7, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 5, 6, 7, 8, 9, 10], true),
-                new DiscreteUpgrade("gasoline-unlock-oil-speedup", UpgradeType.UnlockOilSpeedup, "Unlock Greasing", 8,
+                new DiscreteUpgrade("gasoline-unlock-oil-speedup", UpgradeType.UnlockOilSpeedup, "Unlock Greasing", 7,
                     // Grease prices are 5x the oil/s
-                    CurrencyBuilder.createArray([5, 25, 250, 1250, 5000, 50000, 500000, 1000000], CurrencyType.Oil), [0, 1, 2, 3, 4, 5, 6, 7, 8], true),
+                    CurrencyBuilder.createArray([5, 25, 250, 1250, 5000, 50000, 500000], CurrencyType.Oil), [0, 1, 2, 3, 4, 5, 6, 7], true),
             ]
         )
 
